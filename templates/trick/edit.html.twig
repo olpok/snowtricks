@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Trick{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Edit Trick</h1>
+
+    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('trick_index') }}">retour à la liste</a>
+
+    {{ include('trick/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}
