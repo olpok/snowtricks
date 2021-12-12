@@ -22,6 +22,16 @@
                     <th>Categorie</th>
                     <td>{{ trick.category }}</td>
                 </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>
+                    {% for image in trick.images %}
+                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                        <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
+                        </div>
+                    {% endfor %}
+                    </td>
+                </tr>
             </tbody>
         </table>
 

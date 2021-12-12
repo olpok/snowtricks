@@ -7,12 +7,19 @@
 <div class="container">
     <h1>Trick index</h1>
 
+    	{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{message}}
+			</div>
+		{% endfor %}
+
     <table class="table">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Categorie</th>
+                <th>Images</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +29,21 @@
                 <td>{{ trick.name }}</td>
                 <td>{{ trick.description }}</td>
                 <td>{{ trick.category }}</td>
+                <td>
+                    {% for image in trick.images %}
+                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                        <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
+                        <form method="post" action="{{ path('image_delete', {'id': image.id}) }}" onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+    <button class="btn">Supprimer</button>
+</form>
+                        </div>
+                    {% endfor %}
+                </td>
+
+
+
+
                 <td>
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
