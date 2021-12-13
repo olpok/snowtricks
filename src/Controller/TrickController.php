@@ -47,6 +47,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($trick);
             $entityManager->flush();
+            $this->addFlash('success', 'Trick créé avec success');
 
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -77,6 +78,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Trick modifié avec success');
 
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -95,6 +97,7 @@ class TrickController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $entityManager->remove($trick);
             $entityManager->flush();
+            $this->addFlash('success', 'Trick supprimé avec success');
         }
 
         return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);

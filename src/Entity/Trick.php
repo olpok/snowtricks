@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\All;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -35,9 +37,16 @@ class Trick
     private $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"} )
      */
     private $images;
+
+    /**
+     * @Assert\All({
+     *      @Assert\Image(mimeTypes = "image/jpeg")
+     * })
+     */
+    private $imageFiles;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="trick")
@@ -136,6 +145,30 @@ class Trick
                 $image->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get )}
+     */ 
+    public function getImageFiles()
+    {
+        return $this->imageFiles;
+    }
+
+    /**
+     * @param [type] $imageFiles
+     * @return Trick
+     */ 
+    public function setImageFiles($imageFiles)
+    {
+        foreach ($imageFiles as $imageFile){
+            $image = new Image();
+            $image->setImageFile($imageFile);
+            $this->addImage($image);
+        }
+        $this->imageFiles = $imageFiles;
 
         return $this;
     }
