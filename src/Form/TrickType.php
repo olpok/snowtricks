@@ -25,6 +25,10 @@ class TrickType extends AbstractType
                 "required" => false,
                 'multiple' => true
             ])
+            ->add('videoFiles', FileType::class, [
+                "required" => false,
+                'multiple' => true
+            ])
         ;
     }
 
