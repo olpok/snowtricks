@@ -11,3 +11,8 @@ vich_uploader:
             uri_prefix: /media/tricks/images
             upload_destination: '%kernel.project_dir%/public/media/tricks/images'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+        trick_video:
+            uri_prefix: /media/tricks/videos
+            upload_destination: '%kernel.project_dir%/public/media/tricks/videos'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer    

@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=VideoRepository::class)
+ * @Vich\Uploadable
  */
 class Video
 {
@@ -23,14 +27,21 @@ class Video
     private $name;
 
     /**
+     * @Vich\UploadableField(mapping="trick_video", fileNameProperty="name")
+     * @Assert\File(
+     *     mimeTypes = "video/mp4",
+     *     mimeTypesMessage = "Wrong File-Type - please pick a MP4-Video",
+     *     maxSize = "100M",
+     *     maxSizeMessage="Max. video size: 100MB "
+     * )
+     * @var File|null
+     */
+    private $videoFile;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updated_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
@@ -47,9 +58,28 @@ class Video
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getVideoFile(): ?File
+    {
+        return $this->videoFile;
+    }
+
+    /**
+    * @param File $videoFile
+    * @return self
+    */
+    public function setVideoFile(File $videoFile): self
+    {
+        $this->videoFile = $videoFile;
 
         return $this;
     }
@@ -62,18 +92,6 @@ class Video
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
-    {
-        $this->updated_at = $updated_at;
 
         return $this;
     }

@@ -20,6 +20,7 @@
                 <th>Description</th>
                 <th>Categorie</th>
                 <th>Images</th>
+                <th>Videos</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -37,6 +38,19 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
     <button class="btn">Supprimer</button>
 </form>
+                        </div>
+                    {% endfor %}
+                </td>
+                 <td>
+                    {% for video in trick.videos %}
+                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                            <video width="320" height="240" controls>
+                                <source src="{{vich_uploader_asset(video,'videoFile') }}"  type="video/mp4">
+                            </video>
+                <form method="post" action="{{ path('video_delete', {'id': video.id}) }}" onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+                <button class="btn">Supprimer</button>
+                </form>
                         </div>
                     {% endfor %}
                 </td>

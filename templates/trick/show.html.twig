@@ -32,6 +32,18 @@
                     {% endfor %}
                     </td>
                 </tr>
+                <tr>
+                    <th>Video</th>
+                    <td>
+                    {% for video in trick.videos %}
+                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                            <video width="320" height="240" controls>
+                                <source src="{{vich_uploader_asset(video,'videoFile') }}"  type="video/mp4">
+                            </video>
+                        </div>
+                    {% endfor %}
+                    </td>
+                </tr>
             </tbody>
         </table>
 
