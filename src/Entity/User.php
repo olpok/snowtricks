@@ -77,7 +77,7 @@ class User
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true, cascade={"persist"})
      */
     private $comments;
 

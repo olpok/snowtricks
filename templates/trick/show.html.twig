@@ -47,6 +47,35 @@
             </tbody>
         </table>
 
+        <section id="comments">
+            <h2>{{trick.comments | length }}
+                commentaires:</h2>
+                {% for comment in trick.comments %}
+                    <div class="comment">
+                        <div class="row">
+                            <div class="col-3">
+                                {{comment.user.photo}}
+                                {{comment.user.firstname}} {{comment.user.lastname}} le
+                                <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
+
+                            </div>
+                            <div class="col">
+                                {{comment.content |raw}}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        
+        	{{form_start(commentForm)}}
+			{{form_row(commentForm.user, {'attr':{'placeholder':'Votre nom'}})}}
+			{{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
+			<button type="submit" class="btn btn-success">Commenter !</button>
+			{{form_end(commentForm)}}
+
+	    </section>
+
+    <br>
+
     <a href="{{ path('trick_index') }}">retour à la liste</a>
 
     <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
