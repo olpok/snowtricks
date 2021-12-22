@@ -77,7 +77,6 @@ class TrickController extends AbstractController
                   #  ->setUser($user);
             $entityManager->persist($comment);
             $entityManager->flush();
-            $this->addFlash('success', 'Comment créé avec success');
 
             return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
         }
