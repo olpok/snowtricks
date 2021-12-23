@@ -99,7 +99,8 @@ class TrickController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Trick modifié avec success');
 
-            return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
+            # return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
+             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
