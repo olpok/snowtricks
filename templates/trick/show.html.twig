@@ -5,73 +5,73 @@
 {% block body %}
 
 <div class="container">
-    
+
     <h1>Trick</h1>
 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ trick.name }}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>{{ trick.description }}</td>
-                </tr>
-                <tr>
-                    <th>Categorie</th>
-                    <td>{{ trick.category }}</td>
-                </tr>
-                <tr>
-                    <th>Image</th>
-                    <td>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ trick.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ trick.description }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ trick.category }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>
                     {% for image in trick.images %}
-                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                    <div class="col" style="width:100 px; flex: none; margin: 5px">
                         <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
-                        </div>
-                    {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Video</th>
-                    <td>
-                    {% for video in trick.videos %}
-                        <div class="col" style="width:100 px; flex: none; margin: 5px">
-                            <video width="320" height="240" controls>
-                                <source src="{{vich_uploader_asset(video,'videoFile') }}"  type="video/mp4">
-                            </video>
-                        </div>
-                    {% endfor %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <section id="comments">
-            <h2>{{trick.comments | length }}
-                commentaires:</h2>
-                {% for comment in trick.comments %}
-                    <div class="comment">
-                        <div class="row">
-                            <div class="col-3">
-                                {{comment.user.firstname}} {{comment.user.lastname}} le
-                                <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
-
-                            </div>
-                            <div class="col">
-                                {{comment.content |raw}}
-                            </div>
-                        </div>
                     </div>
-                {% endfor %}
-        
-        	{{form_start(commentForm)}}
-			{{form_row(commentForm.user, {'attr':{'placeholder':'Votre nom'}})}}
-			{{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
-			<button type="submit" class="btn btn-success">Commenter !</button>
-			{{form_end(commentForm)}}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Video</th>
+                <td>
+                    {% for video in trick.videos %}
+                    <div class="col" style="width:100 px; flex: none; margin: 5px">
+                        <video width="320" height="240" controls>
+                            <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
+                        </video>
+                    </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-	    </section>
+    <section id="comments">
+        <h2>{{trick.comments | length }}
+            commentaires:</h2>
+        {% for comment in trick.comments %}
+        <div class="comment">
+            <div class="row">
+                <div class="col-3">
+                    {{comment.user.firstname}} {{comment.user.lastname}} le
+                    <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
+
+                </div>
+                <div class="col">
+                    {{comment.content |raw}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {{form_start(commentForm)}}
+        {{form_row(commentForm.user, {'attr':{'placeholder':'Votre nom'}})}}
+        {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
+        <button type="submit" class="btn btn-success">Commenter !</button>
+        {{form_end(commentForm)}}
+
+    </section>
 
     <br>
 

@@ -41,7 +41,7 @@ class VideoController extends AbstractController{
             $entityManager->flush();
             $this->addFlash('success', 'Video supprimé avec success');
         }
-        return $this->redirectToRoute('trick_index', ['id' => $trickId]);
+        return $this->redirectToRoute('trick_edit', ['id' => $trickId]);
 
     }
 
