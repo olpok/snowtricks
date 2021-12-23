@@ -5,8 +5,54 @@
 {% block body %}
 <div class="container">
     <h1>Edit Trick</h1>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endfor %}
+    <div>
+        <h5>Images</h5>
+        {% for image in trick.images %}
+        <div class="col-md-5" style="width:100 px; flex: none; margin: 5px">
+            <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
+            <form method="post" action="{{ path('image_delete', {'id': image.id}) }}"
+                onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+                <button class="btn">Supprimer</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-5">
+        <h5>Videos</h5>
+        {% for video in trick.videos %}
+        <div class="col" style="width:100 px; flex: none; margin: 5px">
+            <video width="320" height="240" controls>
+                <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
+            </video>
+            <form method="post" action="{{ path('video_delete', {'id': video.id}) }}"
+                onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+                <button class="btn">Supprimer</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
 
-    {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+    <div class="col-md-10">{{ form_row(form.name) }}</div>
+    <div class="col-md-10">{{ form_row(form.description) }}</div>
+    <div class="col-md-10">{{ form_row(form.category) }}</div>
+    <div class="col-md-10">{{ form_row(form.imageFiles) }}</div>
+
+    <div class="col-md-10">{{ form_row(form.videoFiles) }}</div>
+
+
+    {{ form_rest(form) }}
+
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+
 
     <a href="{{ path('trick_index') }}">retour à la liste</a>
 

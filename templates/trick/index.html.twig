@@ -7,11 +7,11 @@
 <div class="container">
     <h1>Trick index</h1>
 
-    	{% for message in app.flashes('success') %}
-			<div class="alert alert-success">
-				{{message}}
-			</div>
-		{% endfor %}
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endfor %}
 
     <table class="table">
         <thead>
@@ -32,26 +32,28 @@
                 <td>{{ trick.category }}</td>
                 <td>
                     {% for image in trick.images %}
-                        <div class="col" style="width:100 px; flex: none; margin: 5px">
+                    <div class="col" style="width:100 px; flex: none; margin: 5px">
                         <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
-                        <form method="post" action="{{ path('image_delete', {'id': image.id}) }}" onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
-    <button class="btn">Supprimer</button>
-</form>
-                        </div>
+                        <form method="post" action="{{ path('image_delete', {'id': image.id}) }}"
+                            onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
+                            <button class="btn">Supprimer</button>
+                        </form>
+                    </div>
                     {% endfor %}
                 </td>
-                 <td>
+                <td>
                     {% for video in trick.videos %}
-                        <div class="col" style="width:100 px; flex: none; margin: 5px">
-                            <video width="320" height="240" controls>
-                                <source src="{{vich_uploader_asset(video,'videoFile') }}"  type="video/mp4">
-                            </video>
-                <form method="post" action="{{ path('video_delete', {'id': video.id}) }}" onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
-                <button class="btn">Supprimer</button>
-                </form>
-                        </div>
+                    <div class="col" style="width:100 px; flex: none; margin: 5px">
+                        <video width="320" height="240" controls>
+                            <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
+                        </video>
+                        <form method="post" action="{{ path('video_delete', {'id': video.id}) }}"
+                            onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+                            <button class="btn">Supprimer</button>
+                        </form>
+                    </div>
                     {% endfor %}
                 </td>
 
@@ -71,6 +73,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('trick_new') }}">Créer une nouvelle figure</a>
+    <a href="{{ path('trick_new') }}">Créer un nouveau trick</a>
 </div>
 {% endblock %}
