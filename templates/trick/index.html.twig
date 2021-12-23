@@ -34,11 +34,6 @@
                     {% for image in trick.images %}
                     <div class="col" style="width:100 px; flex: none; margin: 5px">
                         <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
-                        <form method="post" action="{{ path('image_delete', {'id': image.id}) }}"
-                            onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image.id) }}">
-                            <button class="btn">Supprimer</button>
-                        </form>
                     </div>
                     {% endfor %}
                 </td>
@@ -48,18 +43,9 @@
                         <video width="320" height="240" controls>
                             <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
                         </video>
-                        <form method="post" action="{{ path('video_delete', {'id': video.id}) }}"
-                            onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
-                            <button class="btn">Supprimer</button>
-                        </form>
                     </div>
                     {% endfor %}
                 </td>
-
-
-
-
                 <td>
                     <a href="{{ path('trick_show', {'id': trick.id}) }}">show</a>
                     <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
@@ -67,7 +53,7 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucun enregistrement trouvé</td>
             </tr>
             {% endfor %}
         </tbody>
