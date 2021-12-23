@@ -21,16 +21,20 @@
     <h2 style="text-align:center;">Les dernieres figures</h2>
 
     <div class="row flex">
+
         {% for trick in tricks %}
-        <div class="col-5">
+            <div class="col-5">
 
-            <h5 class="card-title"> <a href="{{ path('trick_show', {'id': trick.id}) }}">{{trick.name}}</a> <a
-                    href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a> {{
-                include('trick/_delete_form.html.twig') }} </h5>
+                <h5 class="card-title"> <a href="{{ path('trick_show', {'id': trick.id}) }}">{{trick.name}}</a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
+                {{ include('trick/_delete_form.html.twig') }} </h5>
+                {% else %}
+                {% endif %}
 
-            {% endfor %}
-        </div>
-
+           
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
