@@ -78,10 +78,9 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-         #   $user = new User;
-         #   $userId = $comment->getUser()->getId();
-            $comment->setTrick($trick);
-                  #  ->setUser($user);
+            $user = $this->getUser();//fetching the User Object of the current User after authentication 
+            $comment->setTrick($trick)
+                     ->setUser($user);
             $entityManager->persist($comment);
             $entityManager->flush();
 
