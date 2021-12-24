@@ -62,10 +62,17 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("trick//{id}", name="trick_show", methods={"GET", "POST"})
+     * @Route("trick/{slug}-{id}", name="trick_show", methods={"GET", "POST"}, requirements = {"slug": "[a-z0-9\-]*"})
      */
-    public function show(Trick $trick, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Trick $trick, string $slug, Request $request, EntityManagerInterface $entityManager): Response
     {
+        if($trick->getSlug() !== $slug){
+            return $this->redirectToRoute('trick_show', [
+                'id'=> $trick->getId(),
+                'slug' => $trick->getSlug()
+            ], 301);
+        }
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -78,7 +85,11 @@ class TrickController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('trick_show', [
+                'id' => $trick->getId(),
+                'slug' => $trick->getSlug()
+            ]);
+
         }
 
         return $this->render('trick/show.html.twig', [

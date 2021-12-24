@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -98,6 +99,12 @@ class Trick
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getSlug(): string
+    {
+        $slugify = new Slugify();
+        return $slugify->slugify($this->name);
     }
 
     public function getDescription(): ?string
