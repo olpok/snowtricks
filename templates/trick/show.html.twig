@@ -65,7 +65,7 @@
         </div>
         {% endfor %}
 
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
 
         {{form_start(commentForm)}}
         {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
@@ -83,7 +83,7 @@
 
     <a href="{{ path('trick_index') }}">retour à la liste</a>
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
     <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
     {{ include('trick/_delete_form.html.twig') }} </h5>
     {% else %}
