@@ -7,6 +7,7 @@ use App\Entity\Trick;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
+use App\Services\Embedding;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class TrickController extends AbstractController
-{
+{   
+    protected $embedding;
+
+    public function __construct(Embedding $embedding)
+    {
+        $this->embedding = $embedding;
+    }
+
     /**
      * @Route("/", name="home", methods={"GET"})
      */
