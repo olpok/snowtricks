@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickType extends AbstractType
@@ -29,9 +30,10 @@ class TrickType extends AbstractType
             ])
              ->add('videos', CollectionType::class, [
                 'entry_type' => VideoType::class,
-                'entry_options' => ['label' => false],
+               // 'entry_options' => ['label' => true],
                 'allow_delete' => true,
                 'allow_add' => true,
+              //  'prototype' => true,
                 "required" => false,
                 'by_reference' => false,
                // 'multiple' => true
