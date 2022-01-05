@@ -178,6 +178,7 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Trick supprimé avec success');
         }
 
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+       // return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
