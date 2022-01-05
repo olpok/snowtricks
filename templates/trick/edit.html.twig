@@ -24,29 +24,35 @@
         {% endfor %}
     </div>
     <div class="col-md-5">
-        <h5>Videos</h5>
+        <h5>Urls</h5>                             
         {% for video in trick.videos %}
-        <div class="col" style="width:100 px; flex: none; margin: 5px">
-            <video width="320" height="240" controls>
-                <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
-            </video>
-            <form method="post" action="{{ path('video_delete', {'id': video.id}) }}"
-                onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
-                <button class="btn">Supprimer</button>
-            </form>
-        </div>
-        {% endfor %}
+
+        {% if video.url and embedUrl is defined %}
+        
+        {{ video.url }}
+        {{ embedUrl }}
+                <div class="col" style="width:100 px; flex: none; margin: 5px">     
+                    <iframe width="220" height="140s" src="{{ embedUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                    {#           <form method="post" action="{{ path('video_delete', {'id': video.id}) }}"
+                                    onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+                                    <button class="btn">Supprimer</button>
+                                </form>#}
+                </div>
+        {% else %}
+        <h3>futur url</h3>
+         {% endif %}
+        {% endfor %}                 
+        
     </div>
+
 
     {{ form_start(form) }}
     <div class="col-md-10">{{ form_row(form.name) }}</div>
     <div class="col-md-10">{{ form_row(form.description) }}</div>
     <div class="col-md-10">{{ form_row(form.category) }}</div>
     <div class="col-md-10">{{ form_row(form.imageFiles) }}</div>
-
-    <div class="col-md-10">{{ form_row(form.videoFiles) }}</div>
-
 
     {{ form_rest(form) }}
 

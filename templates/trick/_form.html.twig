@@ -9,14 +9,18 @@
     <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
 </div>
 {% endfor %}
-<div class="col-md-10">{{ form_row(form.videoFiles) }}</div>
-{% for video in trick.videos %}
-<div class="col" style="width:100 px; flex: none; margin: 5px">
-    <video width="320" height="240" controls>
-        <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
-    </video>
+<div class="col-md-10">
+    <h5>Videos  à télécharger</h5>
+        <ul class="videos" data-index="{{ form.videos|length > 0 ? form.videos|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}">
+        {% for video in form.videos %}
+            <li>{{ form_row(video.url) }}</li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a video</button>
+
 </div>
-{% endfor %}
+
+
 
 {{ form_rest(form) }}
 <button class="btn">{{ button_label|default('Enregistrer') }}</button>

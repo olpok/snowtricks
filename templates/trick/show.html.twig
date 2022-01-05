@@ -33,14 +33,19 @@
                 </td>
             </tr>
             <tr>
-                <th>Video</th>
+                <th>Url</th>
                 <td>
                     {% for video in trick.videos %}
-                    <div class="col" style="width:100 px; flex: none; margin: 5px">
-                        <video width="320" height="240" controls>
-                            <source src="{{vich_uploader_asset(video,'videoFile') }}" type="video/mp4">
-                        </video>
-                    </div>
+                    
+                        {% if video.url and embedUrl is defined %}
+                            {{ video.url}}
+                           
+                            <div class="col" style="width:100 px; flex: none; margin: 5px">     
+                                    <iframe width="320" height="240s" src="{{ embedUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    
+                            </div>
+                        {% else %}
+                        <h3>futur url</h3>
+                        {% endif %}
                     {% endfor %}
                 </td>
             </tr>

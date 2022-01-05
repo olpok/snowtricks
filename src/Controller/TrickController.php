@@ -18,20 +18,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickController extends AbstractController
 {   
+    /**
+    * @var TrickRepository
+    */
+    private $repository;
+    
     protected $embedding;
 
-    public function __construct(Embedding $embedding)
+    public function __construct(TrickRepository $repository, Embedding $embedding)
     {
+        $this->repository=$repository;
         $this->embedding = $embedding;
     }
 
     /**
      * @Route("/", name="home", methods={"GET"})
      */
-    public function home(TrickRepository $trickRepository): Response
+    public function home(): Response
     {
         return $this->render('home.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $this->repository->findAll(),
         ]);
     }
 
@@ -39,10 +45,10 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick", name="trick_index", methods={"GET"})
      */
-    public function index(TrickRepository $trickRepository): Response
+    public function index(): Response
     {
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $this->repository->findAll(),
         ]);
     }
 
@@ -81,6 +87,15 @@ class TrickController extends AbstractController
             ], 301);
         }
 
+        foreach ($trick->getVideos() as $video) {
+        //dd ($video);//ok
+        $url = $video->getUrl();
+        //dd ($url);//ok
+        $embedUrl = $this ->embedding->getEmbedPath($url);
+         }
+
+        // dd ($embedUrl);//ok
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -94,6 +109,7 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('trick_show', [
                 'id' => $trick->getId(),
+                'embedUrl' => $embedUrl,
                 'slug' => $trick->getSlug()
             ]);
 
@@ -101,6 +117,7 @@ class TrickController extends AbstractController
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'embedUrl' => $embedUrl,
             'commentForm' => $form->createView()
         ]);
     }
@@ -110,19 +127,42 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
+       // dd($request);
+        foreach ($trick->getVideos() as $video) {
+        //dd ($video);//ok
+        $url = $video->getUrl();
+        //dd ($url);//ok
+        $embedUrl = $this ->embedding->getEmbedPath($url);
+         }
+        // dd ($embedUrl);//ok
+
+        
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+        foreach ($trick->getVideos() as $video) {
+        $url = $video->getUrl();
+        $embedUrl = $this ->embedding->getEmbedPath($url);
+         }
+        //dd ($embedUrl);//ok
+
             $entityManager->flush();
             $this->addFlash('success', 'Trick modifié avec success');
 
             # return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
-             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+            # return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+             return $this->render('trick/index.html.twig', [
+           'tricks' => $this->repository->findAll(),
+            'embedUrl' => $embedUrl, 
+        ]);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
+            'embedUrl' => $embedUrl, 
             'form' => $form,
         ]);
     }
