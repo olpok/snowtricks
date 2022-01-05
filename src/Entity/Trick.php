@@ -182,6 +182,16 @@ class Trick
         return $this->images;
     }
 
+    public function getImage(): ?Image
+    { 
+        if ($this->images->isEmpty()) {
+            return null;
+        } else{
+           // return $this->images[0]; 
+            return $this->images->first();       
+        }
+    }
+
     public function addImage(Image $image): self
     {
         if (!$this->images->contains($image)) {
