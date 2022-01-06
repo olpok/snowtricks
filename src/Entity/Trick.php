@@ -51,15 +51,6 @@ class Trick
      */
     private $imageFiles;
 
-    /**
-     * @Assert\All({
-     *      @Assert\File(mimeTypes = "video/mp4",
-     *      maxSize = "100M",
-     *      maxSizeMessage="Max. video size: 100MB")
-     * })
-     */
-    private $videoFiles;
-
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="trick")
@@ -145,30 +136,6 @@ class Trick
                 $video->setTrick(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * Get )}
-     */ 
-    public function getVideoFiles()
-    {
-        return $this->videoFiles;
-    }
-
-    /**
-     * @param [type] $videoFiles
-     * @return Trick
-     */ 
-    public function setVideoFiles($videoFiles)
-    {
-        foreach ($videoFiles as $videoFile){
-            $video = new Video();
-            $video->setVideoFile($videoFile);
-            $this->addVideo($video);
-        }
-        $this->videoFiles = $videoFiles;
 
         return $this;
     }
