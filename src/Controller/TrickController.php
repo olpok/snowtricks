@@ -87,8 +87,10 @@ class TrickController extends AbstractController
                 'slug' => $trick->getSlug()
             ], 301);
         }
-
-        foreach ($trick->getVideos() as $video) {
+        
+        // dd($request);
+        //  dd($videos, $request->request->all());
+        foreach ($trick->getVideos() as $video) {   
         //dd ($video);//ok
         $url = $video->getUrl();
         //dd ($url);//ok
