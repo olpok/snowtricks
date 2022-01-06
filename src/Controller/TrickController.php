@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Entity\Comment;
 use App\Form\TrickType;
 use App\Form\CommentType;
@@ -21,8 +22,7 @@ class TrickController extends AbstractController
     /**
     * @var TrickRepository
     */
-    private $repository;
-    
+    private $repository; 
     protected $embedding;
 
     public function __construct(TrickRepository $repository, Embedding $embedding)
@@ -58,6 +58,7 @@ class TrickController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $trick = new Trick();
+
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
