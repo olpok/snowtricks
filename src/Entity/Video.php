@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VideoRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,18 +25,6 @@ class Video
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
-
-    /**
-     * @Vich\UploadableField(mapping="trick_video", fileNameProperty="name")
-     * @Assert\File(
-     *     mimeTypes = "video/mp4",
-     *     mimeTypesMessage = "Wrong File-Type - please pick a MP4-Video",
-     *     maxSize = "100M",
-     *     maxSizeMessage="Max. video size: 100MB "
-     * )
-     * @var File|null
-     */
-    private $videoFile;
 
     /**
      * @ORM\Column(type="text", nullable=true)

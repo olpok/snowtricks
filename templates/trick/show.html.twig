@@ -35,18 +35,15 @@
             <tr>
                 <th>Url</th>
                 <td>
-                    {% for video in trick.videos %}
-                       <p> {{ video.url}}</p>
-                      {% if embedUrl is defined %} 
-                       <p>{{ embedUrl }}</p>
+                    {% for video in embedUrl %}
+                    <p> {{ video}}</p>
 
-                     
-                           
-                            <div class="col" style="width:100 px; flex: none; margin: 5px">     
-                                    <iframe width="320" height="240s" src="{{ embedUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    
-                            </div>
+                    <div class="col" style="width:100 px; flex: none; margin: 5px">
+                        <iframe width="320" height="240s" src="{{ video }}" title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
 
-                        {% endif %}
                     {% endfor %}
                 </td>
             </tr>
