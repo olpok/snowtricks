@@ -88,13 +88,12 @@ class TrickController extends AbstractController
             ], 301);
         }
         
-        // dd($request);
-        //  dd($videos, $request->request->all());
+        $embedUrl= array();
         foreach ($trick->getVideos() as $video) {   
         //dd ($video);//ok
         $url = $video->getUrl();
         //dd ($url);//ok
-        $embedUrl = $this ->embedding->getEmbedPath($url);
+        array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
          }
 
         // dd ($embedUrl);//ok
@@ -130,16 +129,15 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
-       // dd($request);
+        $embedUrl= array();
         foreach ($trick->getVideos() as $video) {
         //dd ($video);//ok
         $url = $video->getUrl();
         //dd ($url);//ok
-        $embedUrl = $this ->embedding->getEmbedPath($url);
+       // $embedUrl = $this ->embedding->getEmbedPath($url); //ok for 1 element
+        array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ;
          }
         // dd ($embedUrl);//ok
-
-        
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
