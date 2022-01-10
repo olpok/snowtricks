@@ -13,11 +13,19 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $category1 = new Category();
+        $category1->setName('Grab1');
 
-        $category = new Category();
-        $category->setName('test');
+        $category2 = new Category();
+        $category2->setName('Rotation1');
 
-        $manager->persist($category);
+        $category3 = new Category();
+        $category3->setName('Flip1');
+
+        $manager->persist($category1);
+        $manager->persist($category2);
+        $manager->persist($category3);
+
 
         $user = new User();
         $user   ->setFirstname('user2')
@@ -31,8 +39,11 @@ class AppFixtures extends Fixture
         $trick = new Trick();
         $trick  ->setName('360')
                 ->setDescription('description')
-                ->setCategory($category) 
-                ->setUser($user);
+                ->setCategory($category3) 
+                ->setUser($user)
+                ->setCreatedAt(new \DateTime())
+                ->setUpdatedAt(new \DateTime())
+                ;
 
         $manager->persist($trick);
 

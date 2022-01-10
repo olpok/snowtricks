@@ -2,18 +2,24 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
-use Cocur\Slugify\Slugify;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\All;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
+//use Doctrine\Persistence\Event\PreUpdateEventArgs;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints\All;
+
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
  * @UniqueEntity(fields={"name"}, message="Ce trick existe déjà!")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Trick
 {
@@ -67,6 +73,16 @@ class Trick
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="trick")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -241,6 +257,7 @@ class Trick
             // set the owning side to null (unless already changed)
             if ($comment->getTrick() === $this) {
                 $comment->setTrick(null);
+                $this->createdAt = new \DateTime();
             }
         }
 
@@ -257,5 +274,50 @@ class Trick
         $this->user = $user;
 
         return $this;
+    }
+
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+
+    }
+
+    /**
+     * Gets triggered only on insert
+     * @ORM\PrePersist
+     */
+    public function setCreatedAt(LifecycleEventArgs $eventArgst): self
+    {
+       // $this->createdAt = $createdAt;
+      //  $this->created_at = $created_at;
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Gets triggered every time on update
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(PreUpdateEventArgs $eventArgs): self
+    {
+       // $this->updatedAt = $updatedAt;
+
+
+
+        $this->updatedAt = new \DateTime();
+
+        return $this;
+
+        
+        //$this->setUpdatedAt(new \DateTime());    
+      /*  if ($this->getCreatedAt() === null) {
+        $this->setCreatedAt(new \DateTime('now'));
+    }*/
     }
 }

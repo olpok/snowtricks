@@ -45,8 +45,32 @@ class TrickController extends AbstractController
     /**
      * @Route("/trick", name="trick_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+
+      /*  $em = $this->getDoctrine()->getManager();
+        $result = $em->createQuery('select m from CoreBundle:Categories m')
+        ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);*/
+        
+        $repository = $entityManager->getRepository(Trick::class);
+        $tricks = $repository->findAll();
+       // dd($tricks);//ok
+        //$trick = $tricks->getTrick();
+
+        // dd($trick);
+      /*   foreach($tricks->getTrick() as $trick){
+            dd($trick);
+         } */
+/*
+        $embedUrl= array();
+        foreach ($trick->getVideos() as $video) {   
+        //dd ($video);//ok
+        $url = $video->getUrl();
+        //dd ($url);//ok
+        array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
+         }*/
+        // $trick = 
+
         return $this->render('trick/index.html.twig', [
             'tricks' => $this->repository->findAll(),
         ]);
@@ -61,8 +85,10 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
+        $user = $this->getUser();//fetching the User Object of the current User after authentication 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick  ->setUser($user);
             $entityManager->persist($trick);
             $entityManager->flush();
             $this->addFlash('success', 'Trick créé avec success');
