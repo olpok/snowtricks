@@ -84,7 +84,7 @@ class Trick
      */
     private $updatedAt;
 
-    public function __construct(SluggerInterface $slugger)
+    public function __construct()
     {
         $this->videos = new ArrayCollection();
         $this->images = new ArrayCollection();
