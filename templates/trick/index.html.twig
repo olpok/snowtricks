@@ -40,11 +40,9 @@
                 <td>
                     {% for video in trick.videos %}
                         {{ video.Url}}
-                        {% if embedUrl is defined %}
-                        {{ embedUrl}}
-                        {% else %}   
-                        <p>embed url n'est pas défini</p>
-                        {% endif %}
+                       
+                        {#{ embedUrl}#}
+                      
                         
                         <div class="col" style="width:100 px; flex: none; margin: 5px">
                             <iframe width="220" height="140s" src =" {#{ embedUrl}#}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

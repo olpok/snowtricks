@@ -23,6 +23,14 @@
                 <td>{{ trick.category }}</td>
             </tr>
             <tr>
+                <th>Date de la création</th>
+                <td>{{ trick.createdAt | date ('d/m/Y à H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Dernières modifs</th>
+                <td>{{ trick.updatedAt | date ('d/m/Y à H:i') }}</td>
+            </tr>
+            <tr>
                 <th>Image</th>
                 <td>
                     {% for image in trick.images %}
