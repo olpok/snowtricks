@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use DateTimeInterface;
-use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -12,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\All;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 //use Doctrine\Persistence\Event\PreUpdateEventArgs;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -84,7 +84,7 @@ class Trick
      */
     private $updatedAt;
 
-    public function __construct()
+    public function __construct(SluggerInterface $slugger)
     {
         $this->videos = new ArrayCollection();
         $this->images = new ArrayCollection();
@@ -110,8 +110,11 @@ class Trick
 
     public function getSlug(): string
     {
-        $slugify = new Slugify();
-        return $slugify->slugify($this->name);
+       // $slugify = new Slugify();
+       // return $slugify->slugify($this->name);
+
+        $slugger = new AsciiSlugger();
+        return $slugger->slug($this->name);
     }
 
     public function getDescription(): ?string
