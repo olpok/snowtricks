@@ -183,12 +183,17 @@ class TrickController extends AbstractController
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {
         //dd ($video);//ok
+        $id=$video->getId();
+       // dd($id);//ok
         $url = $video->getUrl();
         //dd ($url);//ok
        // $embedUrl = $this ->embedding->getEmbedPath($url); //ok for 1 element
         array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ;
+          //dd($id);//ok
          }
+         // dd($id);//ok
         // dd ($embedUrl);//ok
+
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -197,23 +202,23 @@ class TrickController extends AbstractController
 
         foreach ($trick->getVideos() as $video) {
         $url = $video->getUrl();
+         $id=$video->getId();
+        // dd($id);
         $embedUrl = $this ->embedding->getEmbedPath($url);
          }
         //dd ($embedUrl);//ok
+       // dd($id);
 
             $entityManager->flush();
             $this->addFlash('success', 'Trick modifié avec success');
 
             # return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
              return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
-           //  return $this->render('trick/index.html.twig', [
-           //'tricks' => $this->repository->findAll(),
-           // 'embedUrl' => $embedUrl, 
-       // ]);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
+            'videoid'=> $id,
             'embedUrl' => $embedUrl, 
             'form' => $form,
         ]);
