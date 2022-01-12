@@ -28,10 +28,10 @@
         {% for video in embedUrl %}     
                 <div class="col" style="width:100 px; flex: none; margin: 5px">     
                     <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    
-                  <form method="post" action="{#{ path('video_delete', {'id': video.id}) }#}"
+                      
+                  <form method="post" action="{{ path('video_delete', {'id': videoid}) }}"
                         onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                        <input type="hidden" name="_token" value="{#{ csrf_token('delete' ~ video.id) }#}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ videoid) }}">
                         <button class="btn">Supprimer</button>
                     </form> 
                 </div>
@@ -64,7 +64,7 @@
     {{ form_end(form) }}
 
 
-    <a href="{{ path('trick_index') }}">retour à la liste</a>
+    <a href="{{ path('list') }}">retour à la liste</a>
 
     {{ include('trick/_delete_form.html.twig') }}
 </div>
