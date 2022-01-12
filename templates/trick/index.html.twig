@@ -21,6 +21,7 @@
                 <th>Categorie</th>
                 <th>Images</th>
                 <th>Urls</th>
+                <th>embed Urls</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -39,16 +40,34 @@
                 </td>
                 <td>
                     {% for video in trick.videos %}
-                        {{ video.Url}}
-                       
-                        {#{ embedUrl}#}
-                      
-                        
-                        <div class="col" style="width:100 px; flex: none; margin: 5px">
-                            <iframe width="220" height="140s" src =" {#{ embedUrl}#}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                    
+                    <p>  loop ext {{ video.Url}}</p>
+
+                     
+                      {#{video}#}
+                    <p>
+                            loop inter
+                        {% for video in embedUrl %}
+                            {{video}}
+                            <div class="col" style="width:100 px; flex: none; margin: 5px">
+                            <iframe width="220" height="140s" src =" {#{ video}#}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        {% endfor %}
+                    </p> 
 
                     {% endfor %}
+                </td>
+                <td>  
+                      {#{video}#}
+                    <p>
+                        {% for video in embedUrl %}
+                            {{video}}
+                            <div class="col" style="width:100 px; flex: none; margin: 5px">
+                            <iframe width="220" height="140s" src =" {#{ video}#}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        {% endfor %}
+                    </p> 
+
                 </td>
                 <td>
                     <a href="{{ path('trick_show', {slug: trick.slug,'id': trick.id}) }}">show</a>

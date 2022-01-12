@@ -41,6 +41,16 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/list", name="list", methods={"GET"})
+     */
+    public function list(): Response
+    {
+        return $this->render('trick/list.html.twig', [
+            'tricks' => $this->repository->findAll(),
+        ]);
+    }
+
 
     /**
      * @Route("/trick", name="trick_index", methods={"GET"})
@@ -55,12 +65,26 @@ class TrickController extends AbstractController
         $repository = $entityManager->getRepository(Trick::class);
         $tricks = $repository->findAll();
        // dd($tricks);//ok
-        //$trick = $tricks->getTrick();
 
-        // dd($trick);
-      /*   foreach($tricks->getTrick() as $trick){
-            dd($trick);
-         } */
+       
+         foreach($tricks as $trick){
+         //   dd($trick);//ok
+
+          //  dd($trick->getVideos());//ok Oblect and not an array
+            $embedUrl= array();
+            foreach ($trick->getVideos() as $video) {          
+                  $url = $video->getUrl();
+                   // dd ($url);//ok
+                 array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
+            }
+
+           // dd ($embedUrl);//ok for 1 trick
+ 
+         } 
+           
+
+         //  dd ($embedUrl);// only the last
+
 /*
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {   
@@ -68,11 +92,12 @@ class TrickController extends AbstractController
         $url = $video->getUrl();
         //dd ($url);//ok
         array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
-         }*/
-        // $trick = 
+         }*/ 
 
         return $this->render('trick/index.html.twig', [
             'tricks' => $this->repository->findAll(),
+            'embedUrl' => $embedUrl
+
         ]);
     }
 
@@ -93,7 +118,7 @@ class TrickController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Trick créé avec success');
 
-            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -180,11 +205,11 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Trick modifié avec success');
 
             # return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
-            # return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
-             return $this->render('trick/index.html.twig', [
-           'tricks' => $this->repository->findAll(),
-            'embedUrl' => $embedUrl, 
-        ]);
+             return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
+           //  return $this->render('trick/index.html.twig', [
+           //'tricks' => $this->repository->findAll(),
+           // 'embedUrl' => $embedUrl, 
+       // ]);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -205,7 +230,7 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Trick supprimé avec success');
         }
 
-       // return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
-        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
+       // return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }

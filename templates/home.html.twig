@@ -9,82 +9,94 @@
 {% endfor %}
 
 
-<div class="jumbotron text-center">
+<div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center text-center">
+    
+    <section id="header">
 
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
+        <h3>Bienvenue <p>{{ app.user.email }} !</p>
+        </h3>
+        {% endif %}
 
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-    <h3>Bienvenue <p>{{ app.user.email }} !</p>
-    </h3>
-    {% endif %}
+       
+            <div class="col" style="background: url('/media/tricks/images/61ddc7092168a389320854.jpg' ) no-repeat center center; 
+                width: 100%;
+                height: 980px;
+                background-size: cover;">
 
+                <h1 class="text-uppercase text-white">Join The Snowboard</h1>
+                <h1 class="text-uppercase text-white">Riders Community</h1>
+                <p class="pt-5">
+                <a href="#tricks" class="scroll-to btn btn-primary btn-sm text-uppercase">Voir Tricks&nbsp;&nbsp;<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                </p>
 
-    <h1>Ma homepage Snowtricks</h1>
-
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi velit neque repellat culpa! Cupiditate, dolores
-        odit, optio quae repudiandae consequuntur.</p>
-
-    <h2>Image</h2>
+            </div>
+                       
+     </section>      
 
 </div>
 
-<div class="container">
+<section id="tricks" class="py-4 mb-4">
+    <div class="container">
 
-    <h2 style="text-align:center;">Les dernieres figures</h2>
+        <h2 style="text-align:center;">Les dernieres tricks</h2>
 
-    <div class="row flex">
+        <div class="row flex">
 
-        {% for trick in tricks %}
-        <div class="col-3">
+            {% for trick in tricks %}
+            <div class="col-3">
 
-            <div class="card mb-4">
-                {% if trick.image %}
-                <!-- 	<img src="/images/properties/{#{property.fileName}#}" alt="card-img-top" style="width:100; height:auto">-->
-                <img src="/media/tricks/images/{{trick.image.name}}" alt="card-img-top" style="object-fit:cover;max-width:80; height:200px;">
-                <!--   <img src="{#{vich_uploader_asset(property.picture, 'imageFile') | imagine_filter('thumb') }#}" alt="card-img-top">-->
-                {% else %}
-                <img src="{{'/media/tricks/images/default.jpg' }}" alt="card-img-top" style="width:100; height:200px">
-                {% endif %}
-
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="{{ path('trick_show', {slug: trick.slug,'id': trick.id}) }}">{{trick.name}}</a>
-
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-
-                        <a href="{{ path('trick_edit', {'id': trick.id}) }}"> <svg xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-                                <path
-                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
-                            </svg></a>
-
-                        <div class="row" style="display: inline-block;">
-                            <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
-                                onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-
-                                <button class="btn btn-link p-0 m-0 d-inline align-baseline"
-                                    style="display: inline-block;">
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                    </svg>
-
-                                </button>
-
-                            </form>
-                        </div>
-
-                    </h5>
+                <div class="card mb-4">
+                    {% if trick.image %}
+                    <!-- 	<img src="/images/properties/{#{property.fileName}#}" alt="card-img-top" style="width:100; height:auto">-->
+                    <img src="/media/tricks/images/{{trick.image.name}}" alt="card-img-top" style="object-fit:cover;max-width:80; height:200px;">
+                    <!--   <img src="{#{vich_uploader_asset(property.picture, 'imageFile') | imagine_filter('thumb') }#}" alt="card-img-top">-->
                     {% else %}
+                    <img src="{{'/media/tricks/images/default.jpg' }}" alt="card-img-top" style="width:100; height:200px">
                     {% endif %}
 
-                </div>
-            </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ path('trick_show', {slug: trick.slug,'id': trick.id}) }}">{{trick.name}}</a>
 
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
+
+                            <a href="{{ path('trick_edit', {'id': trick.id}) }}"> <svg xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
+                                </svg>
+                            </a>
+
+                            <div class="row" style="display: inline-block;">
+                                <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
+                                    onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+
+                                    <button class="btn btn-link p-0 m-0 d-inline align-baseline"
+                                        style="display: inline-block;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                        </svg>
+
+                                    </button>
+                                </form>
+                            </div>
+
+                        </h5>
+                        {% else %}
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
+</section>
+
+
 {% endblock %}

@@ -6,35 +6,93 @@
 
 <div class="container">
 
-    <h1>Trick</h1>
+    <div class="row justify-content-center">
+
+        {% if trick.image %}
+
+            <div class="image" style="border: 1px solid rgb(0, 26, 255);width: 100%;  display: inline-block;">
+                    <div class="col" style="background: url('/media/tricks/images/{{trick.image.name}}' ) no-repeat center center; 
+                    width: 100%;
+                    height: 540px;
+                    background-size: cover;">
+                        <div class="mx-auto text-center">
+                        <h1 class="text-uppercase mx-auto my-0"  style="color:aliceblue">{{trick.name}}</h1>
+                        </div>
+            </div>
+                        
+            {% else %}
+                   
+            <div class="col" style="background: url('/media/tricks/images/default.jpg' ) no-repeat center center; 
+                    width: 100%;
+                    height: 540px;
+                    background-size: contain;">           
+            </div>
+        
+        {% endif %}
+
+    </div>
+       
+
+
+    <div class="row flex">
+        <div class="col">
+            1 of 2
+            {% for image in trick.images %}
+                <div class="col" style="width:100 px; flex: none; margin: 5px; display: inline-block">
+                        <div class="card-mb-4">
+                            {% if trick.image %}
+                            <!-- 	<img src="/images/properties/{#{property.fileName}#}" alt="card-img-top" style="width:100; height:auto">
+                            <img src="/media/tricks/images/{{trick.image.name}}" alt="card-img-top" style="object-fit:cover;max-width:80; height:200px;">-->
+                            <img src="{{vich_uploader_asset(image,'imageFile') }} "  alt="card-img-top" style="width:auto; height:130px" >
+                            {% else %}
+                            <img src="{{'/media/tricks/images/default.jpg' }}" alt="card-img-top" style="width:100; height:200px">
+                            {% endif %}
+                        </div>  
+                </div>
+        
+            {% endfor %}
+        </div>
+    
+        <div class="col">
+        
+        {% for video in embedUrl %}
+
+                <div class="col" style="width:100; flex: none; margin: 5px; display:inline-block;">
+                    <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+
+            {% endfor %} 
+        </div>
+    </div>
+
+
+    <div class="description">
+        <h3>Description</h3>
+        {{ trick.description }}
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora exercitationem rerum quaerat aperiam minus repellendus quasi, unde enim atque error est optio sed eum similique quo maiores sint ipsa! Minus!</p>
+    </div>
+
+     <div class="row">
+        <div class="col" style="border: 1px solid red;">
+        1 of 3 Catégorie: {{ trick.category }}
+        </div>
+        <div class="col">
+        2 of 3 Créé le {{ trick.createdAt | date ('d/m/Y à H:i') }}
+        </div>
+        <div class="col">
+        3 of 3 Mise à jour le {{ trick.updatedAt | date ('d/m/Y à H:i') }}
+        </div>
+    </div>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Name</th>
-                <td>{{ trick.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ trick.description }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ trick.category }}</td>
-            </tr>
-            <tr>
-                <th>Date de la création</th>
-                <td>{{ trick.createdAt | date ('d/m/Y à H:i') }}</td>
-            </tr>
-            <tr>
-                <th>Dernières modifs</th>
-                <td>{{ trick.updatedAt | date ('d/m/Y à H:i') }}</td>
-            </tr>
-            <tr>
                 <th>Image</th>
                 <td>
                     {% for image in trick.images %}
-                    <div class="col" style="width:100 px; flex: none; margin: 5px">
+                    <div class="col" style="width:100 px; flex: none; margin: 5px; display: inline-block">
                         <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
                     </div>
                     {% endfor %}
@@ -46,8 +104,8 @@
                     {% for video in embedUrl %}
                     <p> {{ video}}</p>
 
-                    <div class="col" style="width:100 px; flex: none; margin: 5px">
-                        <iframe width="320" height="240s" src="{{ video }}" title="YouTube video player" frameborder="0"
+                    <div class="col" style="width:100%; height:auto; flex: none; margin: 5px; display: inline-block">
+                        <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
@@ -59,15 +117,17 @@
     </table>
 
     <section id="comments">
-        <h2>{{trick.comments | length }}
-            commentaires:</h2>
+        <h2>{{trick.comments | length }} commentaires:</h2>
+
+            <small> Pour pouvoir ajouter un commentaire, vous devez vous 
+            <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
+            </small>
         {% for comment in trick.comments %}
         <div class="comment">
             <div class="row">
                 <div class="col-3">
                     {{comment.user.firstname}} {{comment.user.lastname}} le
                     <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
-
                 </div>
                 <div class="col">
                     {{comment.content |raw}}
