@@ -44,10 +44,29 @@ class TrickController extends AbstractController
     /**
      * @Route("/list", name="list", methods={"GET"})
      */
-    public function list(): Response
+    public function list(Request $request): Response
     {
+        // On définit le nombre d'éléments par page
+        $limit = 5;
+
+        // On récupère le numéro de page
+        $page = (int)$request->query->get("page", 1);
+
+        // On récupère les annonces de la page en fonction du filtre
+       
+       $tricks= $this->repository->getPaginatedTricks($page, $limit); 
+        
+       // On récupère le nombre total de tricks
+        $total = $this->repository->getTotalTricks();        
+        
         return $this->render('trick/list.html.twig', [
-            'tricks' => $this->repository->findAll(),
+           // 'tricks' => $this->repository->findAll(), 
+           'tricks'=> $tricks, 
+           'total' => $total, 
+           'limit'=> $limit,
+           'page' => $page
+
+           // compact('tricks', 'limit', 'page', )
         ]);
     }
 

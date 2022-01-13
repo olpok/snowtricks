@@ -20,25 +20,43 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     /**
-     * 
+     * Returns all Tricks per page
+     * @return void 
      */
-    public function findAllDetails(): array
-    {
+    public function getPaginatedTricks($page, $limit){
+        $query = $this->createQueryBuilder('t')
+           // ->where('a.active = 1')
+            ;
 
-         return $this->findBy(array());
-   // return $this->findBy(array(), array('username' => 'ASC'));
+        // On filtre les données
+       // if($filters != null){
+          //  $query->andWhere('a.categories IN(:cats)')
+          //      ->setParameter(':cats', array_values($filters));
+       // }
 
-      /*  return $this->createQueryBuilder('t')
-                ->getQuery()
-                //$result = $query->getResult(Query::HYDRATE_ARRAY);
-                //->setMaxResults(4)
-                ->getResult() ;*/
+        $query->orderBy('t.createdAt')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
 
-           // $this->hydratePicture($properties);
-           //$tricksn = $query->getArrayResult();
-           // dd(tricks);
-
-           // return $tricks;
+    /**
+     * Returns number of Tricks
+     * @return void 
+     */
+    public function getTotalTricks($filters = null){
+        $query = $this->createQueryBuilder('t')
+            ->select('COUNT(t)')
+            //->where('a.active = 1')
+            ;
+        // On filtre les données
+       /* if($filters != null){
+            $query->andWhere('a.categories IN(:cats)')
+                ->setParameter(':cats', array_values($filters));
+        }*/
+       // return single scalar value(not arrays nor objects)
+        return $query->getQuery()->getSingleScalarResult();
     }
 
 /*
