@@ -117,12 +117,9 @@
     </table>
 
     <section id="comments">
-        <h2>{{trick.comments | length }} commentaires:</h2>
+        <h3>{{trick.comments | length }} commentaires:</h3>
 
-            <small> Pour pouvoir ajouter un commentaire, vous devez vous 
-            <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
-            </small>
-        {% for comment in trick.comments %}
+        {% for comment in comments %}
         <div class="comment">
             <div class="row">
                 <div class="col-3">
@@ -135,12 +132,45 @@
             </div>
         </div>
         {% endfor %}
+        <br>
+
+        <ul class="pagination">
+                <li class="page-item {{ (page==1) ? 'disabled' : ''}}">
+                    <a class="page-link" href="?page=1" 
+                    aria-label="Previous 1">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only"></span>
+                    </a>
+                </li>
+                <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
+                    <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
+                </li>               
+                {% set pages = (total/limit)|round(0, 'ceil') %}
+                {% for item in 1..(pages) %}              
+                    <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li>
+                {% endfor %}
+                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                    <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
+                    tabindex="-1">Suivant</a>
+                </li>
+                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                    <a class="page-link" href="?page={{pages}}" 
+                    aria-label="Previous 1">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only"></span>
+                        </a>
+                </li>
+        </ul>
+
+        <small> Pour pouvoir ajouter un commentaire, vous devez vous 
+            <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
+        </small>
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
 
         {{form_start(commentForm)}}
         {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
-        <button type="submit" class="btn btn-success">Commenter !</button>
+        <button type="submit" class="btn btn-dark">Commenter !</button>
         {{form_end(commentForm)}}
         {{form_end(commentForm)}}
         {% else %}
@@ -152,7 +182,7 @@
 
     <br>
 
-    <a href="{{ path('trick_index') }}">retour à la liste</a>
+    <a href="{{ path('list') }}">retour à la liste</a>
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
     <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
