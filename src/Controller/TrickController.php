@@ -10,6 +10,7 @@ use App\Form\TrickType;
 use App\Form\CommentType;
 use App\Services\Embedding;
 use App\Repository\TrickRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,7 +150,7 @@ class TrickController extends AbstractController
     /**
      * @Route("trick/{slug}-{id}", name="trick_show", methods={"GET", "POST"}, requirements = {"slug": "[a-z0-9\-]*"})
      */
-    public function show(Trick $trick, string $slug, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Trick $trick, CommentRepository $commentrepo, string $slug, Request $request, EntityManagerInterface $entityManager): Response
     {
         if($trick->getSlug() !== $slug){
             return $this->redirectToRoute('trick_show', [
@@ -168,7 +169,25 @@ class TrickController extends AbstractController
 
         // dd ($embedUrl);//ok
 
+        // Comments pagination
+        
+        // On définit le nombre d'éléments par page
+            $limit = 10;
+
+        // On récupère le numéro de page
+           $page = (int)$request->query->get("page",1);
+        
+        // On récupère les comments de la page en fonction du filtre
+        $comments= $commentrepo->getPaginatedComments($page, $limit); 
+         // dd($comments);//ok 10 comments
+
+        // On récupère le nombre total de comments
+        $total = $commentrepo->getTotalComments();
+        // dd($total);//ok 13
+
         $comment = new Comment();
+        $comment->setTrick($trick);
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -189,6 +208,10 @@ class TrickController extends AbstractController
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'comments'=> $comments, 
+            'total' => $total, 
+            'limit'=> $limit,
+            'page' => $page,
             'embedUrl' => $embedUrl,
             'commentForm' => $form->createView()
         ]);
