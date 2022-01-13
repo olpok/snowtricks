@@ -172,10 +172,10 @@ class TrickController extends AbstractController
         // Comments pagination
         
         // On définit le nombre d'éléments par page
-            $limit = 10;
+        $limit = 10;
 
         // On récupère le numéro de page
-           $page = (int)$request->query->get("page",1);
+        $page = (int)$request->query->get("page",1);
         
         // On récupère les comments de la page en fonction du filtre
         $comments= $commentrepo->getPaginatedComments($page, $limit); 

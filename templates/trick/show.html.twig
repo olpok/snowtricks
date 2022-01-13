@@ -120,6 +120,10 @@
         <h3>{{trick.comments | length }} commentaires:</h3>
 
         {% for comment in comments %}
+
+        {#% for comment in trick.comments %}
+            
+        {% endfor %#}
         <div class="comment">
             <div class="row">
                 <div class="col-3">
@@ -132,6 +136,7 @@
             </div>
         </div>
         {% endfor %}
+        
         <br>
 
         <ul class="pagination">
