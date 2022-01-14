@@ -6,195 +6,175 @@
 
 <div class="container">
 
-    <div class="row justify-content-center">
+    <div class="row">
 
-        {% if trick.image %}
+   
+        <div class="row justify-content-center">
 
-            <div class="image" style="border: 1px solid rgb(0, 26, 255);width: 100%;  display: inline-block;">
-                    <div class="col" style="background: url('/media/tricks/images/{{trick.image.name}}' ) no-repeat center center; 
-                    width: 100%;
-                    height: 540px;
-                    background-size: cover;">
-                        <div class="mx-auto text-center">
-                        <h1 class="text-uppercase mx-auto my-0"  style="color:aliceblue">{{trick.name}}</h1>
-                        </div>
-            </div>
-                        
-            {% else %}
-                   
-            <div class="col" style="background: url('/media/tricks/images/default.jpg' ) no-repeat center center; 
-                    width: 100%;
-                    height: 540px;
-                    background-size: contain;">           
-            </div>
-        
-        {% endif %}
+            {% if trick.image %}
 
-    </div>
-       
-
-
-    <div class="row flex">
-        <div class="col">
-            1 of 2
-            {% for image in trick.images %}
-                <div class="col" style="width:100 px; flex: none; margin: 5px; display: inline-block">
-                        <div class="card-mb-4">
-                            {% if trick.image %}
-                            <!-- 	<img src="/images/properties/{#{property.fileName}#}" alt="card-img-top" style="width:100; height:auto">
-                            <img src="/media/tricks/images/{{trick.image.name}}" alt="card-img-top" style="object-fit:cover;max-width:80; height:200px;">-->
-                            <img src="{{vich_uploader_asset(image,'imageFile') }} "  alt="card-img-top" style="width:auto; height:130px" >
-                            {% else %}
-                            <img src="{{'/media/tricks/images/default.jpg' }}" alt="card-img-top" style="width:100; height:200px">
-                            {% endif %}
-                        </div>  
+                <div class="image" style="width: 100%;  display: inline-block;">
+                        <div class="col" style="background: url('/media/tricks/images/{{trick.image.name}}' ) no-repeat center center; 
+                        width: 100%;
+                        height: 540px;
+                        background-size: cover;">
+                            <div class="mx-auto text-center">
+                            <h1 class="text-uppercase mx-auto my-0"  style="color:aliceblue">{{trick.name}}</h1>
+                            </div>
                 </div>
-        
-            {% endfor %}
-        </div>
-    
-        <div class="col">
-        
-        {% for video in embedUrl %}
-
-                <div class="col" style="width:100; flex: none; margin: 5px; display:inline-block;">
-                    <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
+                            
+                {% else %}
+                    
+                <div class="col" style="background: url('/media/tricks/images/default.jpg' ) no-repeat center center; 
+                        width: 100%;
+                        height: 540px;
+                        background-size: contain;">           
                 </div>
-
-            {% endfor %} 
-        </div>
-    </div>
-
-
-    <div class="description">
-        <h3>Description</h3>
-        {{ trick.description }}
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora exercitationem rerum quaerat aperiam minus repellendus quasi, unde enim atque error est optio sed eum similique quo maiores sint ipsa! Minus!</p>
-    </div>
-
-     <div class="row">
-        <div class="col" style="border: 1px solid red;">
-        1 of 3 Catégorie: {{ trick.category }}
-        </div>
-        <div class="col">
-        2 of 3 Créé le {{ trick.createdAt | date ('d/m/Y à H:i') }}
-        </div>
-        <div class="col">
-        3 of 3 Mise à jour le {{ trick.updatedAt | date ('d/m/Y à H:i') }}
-        </div>
-    </div>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Image</th>
-                <td>
-                    {% for image in trick.images %}
-                    <div class="col" style="width:100 px; flex: none; margin: 5px; display: inline-block">
-                        <img src="{{vich_uploader_asset(image,'imageFile') }} " width="100" alt="">
-                    </div>
-                    {% endfor %}
-                </td>
-            </tr>
-            <tr>
-                <th>Url</th>
-                <td>
-                    {% for video in embedUrl %}
-                    <p> {{ video}}</p>
-
-                    <div class="col" style="width:100%; height:auto; flex: none; margin: 5px; display: inline-block">
-                        <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                    </div>
-
-                    {% endfor %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <section id="comments">
-        <h3>{{trick.comments | length }} commentaires:</h3>
-
-        {% for comment in comments %}
-
-        {#% for comment in trick.comments %}
             
-        {% endfor %#}
-        <div class="comment">
-            <div class="row">
-                <div class="col-3">
-                    {{comment.user.firstname}} {{comment.user.lastname}} le
-                    <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
+            {% endif %}
+
+        </div>
+
+        <div class="description">
+             <br> 
+
+            <p class="text-muted">
+                <span><i class="fa fa-user pr-2" aria-hidden="true"></i>Catégorie: {{ trick.category }}</span>
+                <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Créé le {{ trick.createdAt | date ('d/m/Y à H:i') }}</span>
+                <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Mise à jour le {{ trick.updatedAt | date ('d/m/Y à H:i') }}</span>
+            </p>
+            
+            <h3>Description</h3>
+            {{ trick.description }}
+
+        </div>
+
+        <div id="images" class="trick-images py-3">
+            {% for image in trick.images %}
+            <br>
+                <div id="carousel-image" class="carousel slide" data-interval="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="img d-block" src="{{vich_uploader_asset(image,'imageFile') }} " alt="card-img-top" 
+                                style="object-fit:cover;max-width:80; height:200px;"  >
+                            </div>
+                        </div>
                 </div>
-                <div class="col">
-                    {{comment.content |raw}}
+            {% endfor %}
+                
+        </div>
+
+        <div id="videos" class="trick-videos py-3">
+                <h4>Regarder</h4>
+                {% for video in embedUrl %}
+                    
+                    <div id="carousel-video" class="carousel slide" data-interval="false">
+                        <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="{{ video }}" allowfullscreen=""></iframe>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                
+
+        </div>
+
+        <section id="comments">
+            <h3>{{trick.comments | length }} commentaires:</h3>
+
+            {% for comment in comments %}
+
+            {#% for comment in trick.comments %}
+                
+            {% endfor %#}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-3">
+                        {{comment.user.firstname}} {{comment.user.lastname}} le
+                        <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
+                    </div>
+                    <div class="col">
+                        {{comment.content |raw}}
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-        
-        <br>
+            {% endfor %}
+            
+            <br>
 
-        <ul class="pagination">
-                <li class="page-item {{ (page==1) ? 'disabled' : ''}}">
-                    <a class="page-link" href="?page=1" 
-                    aria-label="Previous 1">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only"></span>
-                    </a>
-                </li>
-                <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
-                    <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
-                </li>               
-                {% set pages = (total/limit)|round(0, 'ceil') %}
-                {% for item in 1..(pages) %}              
-                    <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li>
-                {% endfor %}
-                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
-                    <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
-                    tabindex="-1">Suivant</a>
-                </li>
-                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
-                    <a class="page-link" href="?page={{pages}}" 
-                    aria-label="Previous 1">
+            <ul class="pagination">
+                    <li class="page-item {{ (page==1) ? 'disabled' : ''}}">
+                        <a class="page-link" href="?page=1" 
+                        aria-label="Previous 1">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only"></span>
                         </a>
-                </li>
-        </ul>
+                    </li>
+                    <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
+                        <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
+                    </li>               
+                    {% set pages = (total/limit)|round(0, 'ceil') %}
+                    {% for item in 1..(pages) %}              
+                        <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li>
+                    {% endfor %}
+                    <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                        <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
+                        tabindex="-1">Suivant</a>
+                    </li>
+                    <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                        <a class="page-link" href="?page={{pages}}" 
+                        aria-label="Previous 1">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only"></span>
+                            </a>
+                    </li>
+            </ul>
 
-        <small> Pour pouvoir ajouter un commentaire, vous devez vous 
-            <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
-        </small>
+            <small> Pour pouvoir ajouter un commentaire, vous devez vous 
+                <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
+            </small>
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
+
+            {{form_start(commentForm)}}
+            {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
+            <button type="submit" class="btn btn-dark">Commenter !</button>
+            {{form_end(commentForm)}}
+            {{form_end(commentForm)}}
+            {% else %}
+
+            {% endif %}
+
+
+        </section>
+
+        <br>
+
+        <a href="{{ path('list') }}">retour à la liste</a>
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-
-        {{form_start(commentForm)}}
-        {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
-        <button type="submit" class="btn btn-dark">Commenter !</button>
-        {{form_end(commentForm)}}
-        {{form_end(commentForm)}}
+        <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
+        {{ include('trick/_delete_form.html.twig') }} </h5>
         {% else %}
-
         {% endif %}
 
 
-    </section>
 
-    <br>
-
-    <a href="{{ path('list') }}">retour à la liste</a>
-
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-    <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
-    {{ include('trick/_delete_form.html.twig') }} </h5>
-    {% else %}
-    {% endif %}
+        <section id="trick_show"><span id="warning-container"><i data-reactroot=""></i></span>
 
 
+
+                
+                                        <script src="/build/js/app.js"></script>
+                    
+
+        <div id="wot-new-assistant-container"><div data-reactroot=""></div></div>
+        </section>
+
+    </div>
 </div>
 {% endblock %}
