@@ -17,7 +17,6 @@
 
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <button class="btn btn-info" id="load-more">Load more</button>
                 <p>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
                 <a href="{{ path('trick_new') }}">Créer un nouveau trick</a>

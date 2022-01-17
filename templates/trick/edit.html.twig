@@ -27,11 +27,11 @@
         <h5>Urls</h5>                             
         {% for video in embedUrl %}     
                 <div class="col" style="width:100 px; flex: none; margin: 5px">     
-                    <iframe width="220" height="140" src="{{ video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                      
-                  <form method="post" action="{{ path('video_delete', {'id': videoid}) }}"
+                    <iframe width="220" height="140" src="{{ video [1]}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
+                  <form method="post" action="{{ path('video_delete', {'id': video[0]}) }}"
                         onsubmit="return confirm('Êtes-vous vraiment sûr ?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ videoid) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video[0]) }}">
                         <button class="btn">Supprimer</button>
                     </form> 
                 </div>

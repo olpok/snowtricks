@@ -23,28 +23,31 @@ class CommentRepository extends ServiceEntityRepository
      * Returns all Comments per page
      * @return void 
      */
-    public function getPaginatedComments($page, $limit){
-        $query = $this->createQueryBuilder('c');
-
-        $query->orderBy('c.created_at')
+    public function getPaginatedComments($page, $limit, $trick){
+        return $this->createQueryBuilder('c')
+            ->where('c.trick = :trick' )
+            ->setParameter('trick', $trick)
+            ->orderBy('c.created_at')
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
         ;
-        return $query->getQuery()->getResult();
+        
     }
 
     /**
      * Returns number of Comments
-     * @return void 
      */
-    public function getTotalComments($filters = null){
+ /*   public function getTotalComments($filters = null){
         $query = $this->createQueryBuilder('c')
             ->select('COUNT(c)')
-            //->where('a.active = 1')
+            ->where('c.trick_id = ')
             ;
        // return single scalar value(not arrays nor objects)
         return $query->getQuery()->getSingleScalarResult();
-    }
+    }*/
 
     // /**
     //  * @return Comment[] Returns an array of Comment objects
