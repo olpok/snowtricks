@@ -136,6 +136,8 @@
             <small> Pour pouvoir ajouter un commentaire, vous devez vous 
                 <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
             </small>
+            
+            <br> <br>
 
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
 
