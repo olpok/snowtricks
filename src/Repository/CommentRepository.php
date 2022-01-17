@@ -27,7 +27,7 @@ class CommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.trick = :trick' )
             ->setParameter('trick', $trick)
-            ->orderBy('c.created_at')
+            ->orderBy('c.created_at', 'DESC') 
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit)
             ->getQuery()
@@ -35,8 +35,7 @@ class CommentRepository extends ServiceEntityRepository
             ;
         ;
         
-    }
-
+    } 
     /**
      * Returns number of Comments
      */
