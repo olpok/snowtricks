@@ -176,17 +176,16 @@ class TrickController extends AbstractController
 
         // On récupère le numéro de page
         $page = (int)$request->query->get("page",1);
-        
+              
         // On récupère les comments de la page en fonction du filtre
-        $comments= $commentrepo->getPaginatedComments($page, $limit); 
-         // dd($comments);//ok 10 comments
+         $id=$trick->getId();
+        $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
 
         // On récupère le nombre total de comments
-        $total = $commentrepo->getTotalComments();
-        // dd($total);//ok 13
+       // $total = $commentrepo->getTotalComments();
+        $total= $trick->getComments()->count();
 
         $comment = new Comment();
-        $comment->setTrick($trick);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -222,13 +221,15 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
+        
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {
         //dd ($video);//ok
         $url = $video->getUrl();
+        $id = $video->getId();
         //dd ($url);//ok
        // $embedUrl = $this ->embedding->getEmbedPath($url); //ok for 1 element
-        array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ;
+        array_push($embedUrl,[$id,  $this ->embedding->getEmbedPath($url)]) ;
          }
         // dd ($embedUrl);//ok
 
@@ -258,6 +259,7 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'embedUrl' => $embedUrl, 
             'form' => $form,
+
         ]);
     }
 
