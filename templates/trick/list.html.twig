@@ -28,7 +28,6 @@
         </div>
 
 
-
         <ul class="pagination">
                 <li class="page-item {{ (page==1) ? 'disabled' : ''}}">
                     <a class="page-link" href="?page=1" 
@@ -62,4 +61,11 @@
 
 
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    
+
+     <script src= {{asset('js/load_more.js') }}></script>
+
 {% endblock %}

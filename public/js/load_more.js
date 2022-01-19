@@ -6,7 +6,7 @@ $(function () {
         page++;
 
         $.ajax({
-            url: "/trick/list",
+            url: "/listLM",
             data: {
                 page: page
             },

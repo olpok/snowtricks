@@ -38,7 +38,8 @@ class TrickController extends AbstractController
     public function home(): Response
     {
         return $this->render('home.html.twig', [
-            'tricks' => $this->repository->findAll(),
+            //'tricks' => $this->repository->findAll(),
+            'tricks' => $this->repository->findBy([], ['createdAt' => 'desc'], 6, 0),
         ]);
     }
 
@@ -61,7 +62,6 @@ class TrickController extends AbstractController
         $total = $this->repository->getTotalTricks();        
         
         return $this->render('trick/list.html.twig', [
-           // 'tricks' => $this->repository->findAll(), 
            'tricks'=> $tricks, 
            'total' => $total, 
            'limit'=> $limit,
@@ -69,6 +69,28 @@ class TrickController extends AbstractController
 
            // compact('tricks', 'limit', 'page', )
         ]);
+    }
+
+    /**
+     * @Route("/listLM", name="listLM", methods={"GET"})
+     */
+    public function listLoadMore(Request $request): Response
+    {
+        // On définit le nombre d'éléments par page
+        $limit = 3;
+
+        // On récupère le numéro de page
+        $page = (int)$request->query->get("page", 1);
+
+        // On récupère les tricks de la page en fonction du filtre      
+        $tricks= $this->repository->getLoadMoreTricks($page, $limit);              
+        
+        return $this->render('trick/listLM.html.twig', [
+           'tricks'=> $tricks, 
+           'limit'=> $limit,
+           'page' => $page
+        ]);
+        
     }
 
 
@@ -185,6 +207,11 @@ class TrickController extends AbstractController
        // $total = $commentrepo->getTotalComments();
         $total= $trick->getComments()->count();
 
+
+     
+
+
+
         $comment = new Comment();
 
         $form = $this->createForm(CommentType::class, $comment);
@@ -224,11 +251,12 @@ class TrickController extends AbstractController
         
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {
-        //dd ($video);//ok
+      //  dd ($video);//ok
         $id=$video->getId();
        // dd($id);//ok
         $url = $video->getUrl();
         $id = $video->getId();
+        
         //dd ($url);//ok
        // $embedUrl = $this ->embedding->getEmbedPath($url); //ok for 1 element
         array_push($embedUrl,[$id,  $this ->embedding->getEmbedPath($url)]) ;
@@ -246,7 +274,7 @@ class TrickController extends AbstractController
         foreach ($trick->getVideos() as $video) {
         $url = $video->getUrl();
          $id=$video->getId();
-        // dd($id);
+        // dd($id);not ok
         $embedUrl = $this ->embedding->getEmbedPath($url);
          }
         //dd ($embedUrl);//ok
@@ -261,7 +289,7 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
-            'videoid'=> $id,
+           // 'videoid'=> $id,
             'embedUrl' => $embedUrl, 
             'form' => $form,
 
@@ -281,5 +309,33 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
        // return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * Undocumented function
+     * @Route("trick/{id}/load", name="trick_load")
+     * @return void
+     */
+    public function loadjson(Trick $trick, CommentRepository $commentrepo, Request $request, EntityManagerInterface $entityManage){
+
+        // On définit le nombre d'éléments par page
+        $limit = 10;
+
+        // On récupère le numéro de page
+        $page = (int)$request->query->get("page",1);
+              
+        // On récupère les comments de la page en fonction du filtre
+         $id=$trick->getId();
+        $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
+
+        // On récupère le nombre total de comments
+       // $total = $commentrepo->getTotalComments();
+        $total= $trick->getComments()->count();
+        //dd($total); //ok
+
+
+        return $this->json(['code' => 200, 'load'  => $total], 200);
+
+
+
     }
 }
