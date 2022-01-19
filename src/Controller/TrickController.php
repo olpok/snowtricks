@@ -261,7 +261,7 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
-            'videoid'=> $id,
+           // 'videoid'=> $id,
             'embedUrl' => $embedUrl, 
             'form' => $form,
 
