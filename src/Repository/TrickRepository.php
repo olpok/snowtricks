@@ -34,8 +34,22 @@ class TrickRepository extends ServiceEntityRepository
           //      ->setParameter(':cats', array_values($filters));
        // }
 
-        $query->orderBy('t.createdAt')
+        $query->orderBy('t.createdAt', 'DESC')
             ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Returns all Tricks less displayed allready per page
+     * @return void 
+     */
+    public function getLoadMoreTricks($page, $limit){
+        $query = $this->createQueryBuilder('t');
+
+        $query->orderBy('t.createdAt', 'DESC')
+            ->setFirstResult($page* $limit )
             ->setMaxResults($limit)
         ;
         return $query->getQuery()->getResult();

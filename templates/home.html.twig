@@ -36,19 +36,34 @@
 
 </div>
 
-<section id="tricks" class="py-4 mb-4">
+<div class="container py-5">
 
-    <div class="container">
+    <section id="tricks" class="row py-5">
 
         <h2 style="text-align:center;">Les dernieres tricks</h2>
         <div class="row py-5" id="tricks">
-            {{ include('trick/_tricklist.html.twig', { tricks: tricks }) }}
+            {{ include('trick/_tricklist.html.twig', { tricks: tricks }) }}  
         </div>
-        <div class="col text-center">
-            <a href={{ path ('list') }} class="btn btn-outline-primary text-uppercase">Voir tous les tricks</a>
-        </div>
-    </div>
-</section>
 
+    </section>
+
+    <div class="col text-center">
+          <button id="load-more" class="btn btn-primary">Load more</button>
+    </div> 
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src= {{asset('js/load_more.js') }}></script>
 
 {% endblock %}
