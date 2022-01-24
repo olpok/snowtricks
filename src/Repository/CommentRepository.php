@@ -36,6 +36,43 @@ class CommentRepository extends ServiceEntityRepository
         ;
         
     } 
+
+    /**
+     * Returns all Comments less displayed per page
+     * @return void 
+     */
+    public function getLoadMoreComments($page, $limitlm, $trick){
+        return $this->createQueryBuilder('c')
+            ->where('c.trick = :trick' )
+            ->setParameter('trick', $trick)
+            ->orderBy('c.created_at', 'DESC') 
+            ->setFirstResult(($page * $limitlm) +2)
+            ->setMaxResults($limitlm)
+            ->getQuery()
+            ->getResult()
+            ;
+        ;       
+    }
+
+    /**
+     * Returns showed Comments // per page
+     * @return void 
+     */
+    public function getShowedComments($page, $limitShowed, $trick){
+        return $this->createQueryBuilder('c')
+            ->where('c.trick = :trick' )
+            ->setParameter('trick', $trick)
+            ->orderBy('c.created_at', 'DESC') 
+            ->setFirstResult(($page * $limitShowed) - $limitShowed)
+            ->setMaxResults($limitShowed)
+            ->getQuery()
+            ->getResult()
+            ;
+        ;
+        
+    } 
+
+
     /**
      * Returns number of Comments
      */

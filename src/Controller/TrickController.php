@@ -93,56 +93,6 @@ class TrickController extends AbstractController
         
     }
 
-
-    /**
-     * @Route("/trick", name="trick_index", methods={"GET"})
-     */
-    public function index(EntityManagerInterface $entityManager): Response
-    {
-
-      /*  $em = $this->getDoctrine()->getManager();
-        $result = $em->createQuery('select m from CoreBundle:Categories m')
-        ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);*/
-        
-        $repository = $entityManager->getRepository(Trick::class);
-        $tricks = $repository->findAll();
-       // dd($tricks);//ok
-
-       
-         foreach($tricks as $trick){
-         //   dd($trick);//ok
-
-          //  dd($trick->getVideos());//ok Oblect and not an array
-            $embedUrl= array();
-            foreach ($trick->getVideos() as $video) {          
-                  $url = $video->getUrl();
-                   // dd ($url);//ok
-                 array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
-            }
-
-           // dd ($embedUrl);//ok for 1 trick
- 
-         } 
-           
-
-         //  dd ($embedUrl);// only the last
-
-/*
-        $embedUrl= array();
-        foreach ($trick->getVideos() as $video) {   
-        //dd ($video);//ok
-        $url = $video->getUrl();
-        //dd ($url);//ok
-        array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
-         }*/ 
-
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $this->repository->findAll(),
-            'embedUrl' => $embedUrl
-
-        ]);
-    }
-
     /**
      * @Route("/trick/new", name="trick_new", methods={"GET", "POST"})
      */
@@ -200,17 +150,25 @@ class TrickController extends AbstractController
         $page = (int)$request->query->get("page",1);
               
         // On récupère les comments de la page en fonction du filtre
-         $id=$trick->getId();
+        $id=$trick->getId();
         $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
 
+
+        $limitShowed=6;
+        $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
+     //    'tricks' => $this->repository->findBy([], ['createdAt' => 'desc'], 6, 0),
+
         // On récupère le nombre total de comments
-       // $total = $commentrepo->getTotalComments();
         $total= $trick->getComments()->count();
 
 
-     
 
+         //section load more comments
 
+        $limitShowed=6;
+        $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
+        
+        // fin section loadmore comments
 
         $comment = new Comment();
 
@@ -234,9 +192,11 @@ class TrickController extends AbstractController
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'showedComments' => $showedComments,
             'comments'=> $comments, 
             'total' => $total, 
             'limit'=> $limit,
+            'limitShowed' => $limitShowed,
             'page' => $page,
             'embedUrl' => $embedUrl,
             'commentForm' => $form->createView()
@@ -289,7 +249,6 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/edit.html.twig', [
             'trick' => $trick,
-           // 'videoid'=> $id,
             'embedUrl' => $embedUrl, 
             'form' => $form,
 
@@ -310,32 +269,5 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
        // return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
-    /**
-     * Undocumented function
-     * @Route("trick/{id}/load", name="trick_load")
-     * @return void
-     */
-    public function loadjson(Trick $trick, CommentRepository $commentrepo, Request $request, EntityManagerInterface $entityManage){
 
-        // On définit le nombre d'éléments par page
-        $limit = 10;
-
-        // On récupère le numéro de page
-        $page = (int)$request->query->get("page",1);
-              
-        // On récupère les comments de la page en fonction du filtre
-         $id=$trick->getId();
-        $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
-
-        // On récupère le nombre total de comments
-       // $total = $commentrepo->getTotalComments();
-        $total= $trick->getComments()->count();
-        //dd($total); //ok
-
-
-        return $this->json(['code' => 200, 'load'  => $total], 200);
-
-
-
-    }
 }
