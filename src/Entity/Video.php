@@ -58,25 +58,6 @@ class Video
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getVideoFile(): ?File
-    {
-        return $this->videoFile;
-    }
-
-    /**
-    * @param File $videoFile
-    * @return self
-    */
-    public function setVideoFile(File $videoFile): self
-    {
-        $this->videoFile = $videoFile;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
