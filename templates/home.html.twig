@@ -47,15 +47,15 @@
 
     </section>
 
-    <div class="col text-center">
-          <button id="load-more" class="btn btn-primary">Load more</button>
-    </div> 
+        <div class="col text-center">
+            <button id="load-more" class="btn btn-primary">Load more</button>
+        </div>
 
-</div>
+        <div id="scrollUp">
+            <a href='#top'><img src='/media/to_top.png'/></a>
+        </div>
 
-
-
-
+</div>  
 
 
 
@@ -64,6 +64,8 @@
 
 {% block javascripts %}
 
-    <script src= {{asset('js/load_more.js') }}></script>
+    <script src= "{{ asset('js/scroll.js') }}"></script>
+    <script src= "{{asset('js/load_more.js') }}"></script>
+
 
 {% endblock %}
