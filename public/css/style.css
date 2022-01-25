@@ -34,8 +34,12 @@
   opacity: 0.7;
 }
 
-
-
+.bouton-down-home{
+  bottom: 8px; 
+  right: 52px; 
+  position:absolute; 
+  opacity: 0.6;
+}
 
 .title 
 {
