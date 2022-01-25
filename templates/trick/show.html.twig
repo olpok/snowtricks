@@ -2,6 +2,37 @@
 
 {% block title %}Trick{% endblock %}
 
+{% block stylesheets %}
+<style>
+    @media only screen and (max-width: 480px) {
+     .med {     
+       display: none;
+     }
+     #mob-display {
+         display:inline;
+
+     }
+    }
+    @media only screen and (min-width: 480px) {
+     .mob {     
+       display: none;
+     }
+    }
+
+
+  </style>
+
+  
+ 
+ <head>
+  <link rel="stylesheet" href="css/our.css?<?php echo time(); ?>" />
+    
+ </head>
+
+{% endblock %}
+
+
+
 {% block body %}
 
 <div class="container">
@@ -49,39 +80,18 @@
 
         </div>
 
-        <div id="images" class="trick-images py-3">
-            {% for image in trick.images %}
-            <br>
-                <div id="carousel-image" class="carousel slide" data-interval="false">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img class="img d-block" src="{{vich_uploader_asset(image,'imageFile') }} " alt="card-img-top" 
-                                style="object-fit:cover;max-width:80; height:200px;"  >
-                            </div>
-                        </div>
-                </div>
-            {% endfor %}
-                
+        <div class="med">     
+        {% include "trick/_media.html.twig" %}
         </div>
 
-        <div id="videos" class="trick-videos py-3">
-                <h4>Regarder</h4>
-                {% for video in embedUrl %}
-                    
-                    <div id="carousel-video" class="carousel slide" data-interval="false">
-                        <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{{ video }}" allowfullscreen=""></iframe>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
-                {% endfor %}
-                
-
+        <div class="mob">
+             <a href="{#{path ('list') }#}" class="btn btn-outline-primary btn-sm">See media</a>
+  
         </div>
+
+            <div id="mob-display">
+               
+             </div>
 
         <section id="step">
 
