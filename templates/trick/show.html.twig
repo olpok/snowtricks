@@ -8,27 +8,13 @@
      .med {     
        display: none;
      }
-     #mob-display {
-         display:inline;
-
-     }
     }
     @media only screen and (min-width: 480px) {
      .mob {     
        display: none;
      }
     }
-
-
   </style>
-
-  
- 
- <head>
-  <link rel="stylesheet" href="css/our.css?<?php echo time(); ?>" />
-    
- </head>
-
 {% endblock %}
 
 
@@ -38,7 +24,6 @@
 <div class="container">
 
     <div class="row">
-
    
         <div class="row justify-content-center">
 
@@ -84,14 +69,9 @@
         {% include "trick/_media.html.twig" %}
         </div>
 
-        <div class="mob">
-             <a href="{#{path ('list') }#}" class="btn btn-outline-primary btn-sm">See media</a>
-  
+        <div class="mob">          
+            <button id="" class="btn btn-outline-primary btn-sm">Show media</button> 
         </div>
-
-            <div id="mob-display">
-               
-             </div>
 
         <section id="step">
 
@@ -188,28 +168,13 @@
 
 
 
-
-<!--
-        <section id="trick_show"><span id="warning-container"><i data-reactroot=""></i></span>
-
-
-
-                
-                                        <script src="/build/js/app.js"></script>
-                    
-
-        <div id="wot-new-assistant-container">
-            <div data-reactroot=""></div>
-        </div>
-        </section> -->
-
     </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
 
-       
+        <script src= {{asset('js/display_media_mobile.js') }}></script>     
         <script src= {{asset('js/comments_load_more.js') }}></script>
 
         
