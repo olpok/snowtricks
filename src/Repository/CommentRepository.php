@@ -72,19 +72,6 @@ class CommentRepository extends ServiceEntityRepository
         
     } 
 
-
-    /**
-     * Returns number of Comments
-     */
- /*   public function getTotalComments($filters = null){
-        $query = $this->createQueryBuilder('c')
-            ->select('COUNT(c)')
-            ->where('c.trick_id = ')
-            ;
-       // return single scalar value(not arrays nor objects)
-        return $query->getQuery()->getSingleScalarResult();
-    }*/
-
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

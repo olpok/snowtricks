@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\All;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-//use Doctrine\Persistence\Event\PreUpdateEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -110,9 +109,6 @@ class Trick
 
     public function getSlug(): string
     {
-       // $slugify = new Slugify();
-       // return $slugify->slugify($this->name);
-
         $slugger = new AsciiSlugger();
         return $slugger->slug($this->name);
     }
@@ -292,8 +288,6 @@ class Trick
      */
     public function setCreatedAt(LifecycleEventArgs $eventArgst): self
     {
-       // $this->createdAt = $createdAt;
-      //  $this->created_at = $created_at;
         $this->createdAt = new \DateTime();
         return $this;
     }
@@ -309,18 +303,7 @@ class Trick
      */
     public function setUpdatedAt(PreUpdateEventArgs $eventArgs): self
     {
-       // $this->updatedAt = $updatedAt;
-
-
-
         $this->updatedAt = new \DateTime();
-
         return $this;
-
-        
-        //$this->setUpdatedAt(new \DateTime());    
-      /*  if ($this->getCreatedAt() === null) {
-        $this->setCreatedAt(new \DateTime('now'));
-    }*/
     }
 }
