@@ -151,7 +151,7 @@ class TrickController extends AbstractController
               
         // On récupère les comments de la page en fonction du filtre
         $id=$trick->getId();
-       // $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
+        $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
        
         $limitShowed=6;
         $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
@@ -192,7 +192,7 @@ class TrickController extends AbstractController
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'showedComments' => $showedComments,
-           //'comments'=> $comments, 
+            'comments'=> $comments, 
             'total' => $total, 
             'limit'=> $limit,
             'limitShowed' => $limitShowed,
