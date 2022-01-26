@@ -111,31 +111,19 @@
             <br>
 
             <ul class="pagination">
-                    <li class="page-item {{ (page==1) ? 'disabled' : ''}}">
-                        <a class="page-link" href="?page=1" 
-                        aria-label="Previous 1">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only"></span>
-                        </a>
-                    </li>
-                    <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
-                        <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
-                    </li>               
-                    {% set pages = (total/limitShowed)|round(0, 'ceil') %}
-                    {% for item in 1..(pages) %}              
-                        <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li>
-                    {% endfor %}
-                    <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
-                        <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
+                <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
+                    <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
+                </li>               
+                {% set pages = (total/limitShowed)|round(0, 'ceil') %}
+                {% for item in 1..(pages) %}                   
+                    {% if total !=0  %}
+                        <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li> 
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                    <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
                         tabindex="-1">Suivant</a>
-                    </li>
-                    <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
-                        <a class="page-link" href="?page={{pages}}" 
-                        aria-label="Previous 1">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only"></span>
-                            </a>
-                    </li>
+                </li>
             </ul>
 
             <small> Pour pouvoir ajouter un commentaire, vous devez vous 
