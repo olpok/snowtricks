@@ -153,8 +153,7 @@ class TrickController extends AbstractController
         //section load more comments
         $limitShowed=6;
         $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
-        
-        //end section loadmore comments
+        //end comments pagination
 
         $comment = new Comment();
 
