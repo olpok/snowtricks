@@ -21,18 +21,6 @@ class ImageController extends AbstractController{
      */
     public function delete(Request $request, Image $image): Response
     {
-        /* après AJAX
-         $data = json_decode($request->getContent(), true);
-
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
-            return new JsonResponse(['success' => 1]);
-        }
-        
-        return new JsonResponse(['error' => 'Token invalide', 400]);*/
-
         $trickId = $image->getTrick()->getId();
 
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->request->get('_token'))) {
@@ -42,7 +30,6 @@ class ImageController extends AbstractController{
             $this->addFlash('success', 'Image supprimé avec success');
         }
         return $this->redirectToRoute('trick_edit', ['id' => $trickId]);
-
     }
 
 }

@@ -38,7 +38,6 @@ class TrickController extends AbstractController
     public function home(): Response
     {
         return $this->render('home.html.twig', [
-            //'tricks' => $this->repository->findAll(),
             'tricks' => $this->repository->findBy([], ['createdAt' => 'desc'], 6, 0),
         ]);
     }
@@ -54,8 +53,7 @@ class TrickController extends AbstractController
         // On récupère le numéro de page
         $page = (int)$request->query->get("page", 1);
 
-        // On récupère les annonces de la page en fonction du filtre
-       
+        // On récupère les annonces de la page en fonction du filtre     
        $tricks= $this->repository->getPaginatedTricks($page, $limit); 
         
        // On récupère le nombre total de tricks
@@ -66,8 +64,6 @@ class TrickController extends AbstractController
            'total' => $total, 
            'limit'=> $limit,
            'page' => $page
-
-           // compact('tricks', 'limit', 'page', )
         ]);
     }
 
@@ -133,13 +129,9 @@ class TrickController extends AbstractController
         
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {   
-        //dd ($video);//ok
         $url = $video->getUrl();
-        //dd ($url);//ok
         array_push($embedUrl, $this ->embedding->getEmbedPath($url)) ; 
          }
-
-        // dd ($embedUrl);//ok
 
         // Comments pagination
         
@@ -150,24 +142,19 @@ class TrickController extends AbstractController
         $page = (int)$request->query->get("page",1);
               
         // On récupère les comments de la page en fonction du filtre
-        $id=$trick->getId();
         $comments= $commentrepo->getPaginatedcomments($page, $limit, $trick->getId());  
        
         $limitShowed=6;
         $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
-     //    'tricks' => $this->repository->findBy([], ['createdAt' => 'desc'], 6, 0),
 
         // On récupère le nombre total de comments
         $total= $trick->getComments()->count();
 
-
-
-         //section load more comments
-
+        //section load more comments
         $limitShowed=6;
         $showedComments= $commentrepo->getShowedcomments($page, $limitShowed, $trick->getId()); 
         
-        // fin section loadmore comments
+        //end section loadmore comments
 
         $comment = new Comment();
 
@@ -207,23 +194,14 @@ class TrickController extends AbstractController
      */
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        
+        //embedding url
         $embedUrl= array();
         foreach ($trick->getVideos() as $video) {
-      //  dd ($video);//ok
-        $id=$video->getId();
-       // dd($id);//ok
-        $url = $video->getUrl();
-        $id = $video->getId();
-        
-        //dd ($url);//ok
-       // $embedUrl = $this ->embedding->getEmbedPath($url); //ok for 1 element
-        array_push($embedUrl,[$id,  $this ->embedding->getEmbedPath($url)]) ;
-
-         }
-         // dd($id);//ok
-        // dd ($embedUrl);//ok
-
+            $id=$video->getId();
+            $url = $video->getUrl();
+            $id = $video->getId();
+            array_push($embedUrl,[$id,  $this ->embedding->getEmbedPath($url)]) ;
+        }
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -232,18 +210,14 @@ class TrickController extends AbstractController
 
         foreach ($trick->getVideos() as $video) {
         $url = $video->getUrl();
-         $id=$video->getId();
-        // dd($id);not ok
+        $id=$video->getId();
         $embedUrl = $this ->embedding->getEmbedPath($url);
          }
-        //dd ($embedUrl);//ok
-       // dd($id);
 
             $entityManager->flush();
             $this->addFlash('success', 'Trick modifié avec success');
 
-            # return $this->redirectToRoute('trick_edit', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
-             return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('trick/edit.html.twig', [
@@ -266,7 +240,6 @@ class TrickController extends AbstractController
         }
 
         return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
-       // return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
 }

@@ -25,14 +25,7 @@ class TrickRepository extends ServiceEntityRepository
      */
     public function getPaginatedTricks($page, $limit){
         $query = $this->createQueryBuilder('t')
-           // ->where('a.active = 1')
             ;
-
-        // On filtre les données
-       // if($filters != null){
-          //  $query->andWhere('a.categories IN(:cats)')
-          //      ->setParameter(':cats', array_values($filters));
-       // }
 
         $query->orderBy('t.createdAt', 'DESC')
             ->setFirstResult(($page * $limit) - $limit)
@@ -62,24 +55,10 @@ class TrickRepository extends ServiceEntityRepository
     public function getTotalTricks($filters = null){
         $query = $this->createQueryBuilder('t')
             ->select('COUNT(t)')
-            //->where('a.active = 1')
             ;
-        // On filtre les données
-       /* if($filters != null){
-            $query->andWhere('a.categories IN(:cats)')
-                ->setParameter(':cats', array_values($filters));
-        }*/
        // return single scalar value(not arrays nor objects)
         return $query->getQuery()->getSingleScalarResult();
     }
-
-/*
-    public function findByIdThenReturnArray($id){
-    $query = $this->getEntityManager()
-        ->createQuery("SELECT e FROM YourOwnBundle:Entity e WHERE e.id = :id")
-        ->setParameter('id', $id);
-    return $query->getArrayResult();
-}*/
 
     // /**
     //  * @return Trick[] Returns an array of Trick objects

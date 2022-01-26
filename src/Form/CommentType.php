@@ -17,12 +17,6 @@ class CommentType extends AbstractType
             ->add('content', null,  [
                   'label' => false
             ])
-            #->add('created_at')
-            #->add('user', EntityType::class, [
-            #    'class' => User::class,
-            #    'choice_label'=> 'firstname'
-            #])
-            #->add('trick')
         ;
     }
 

@@ -1,19 +1,4 @@
 #loadmore {
-  /*    width: 200px;  
-  color: #fff;  
-  display: block;  
-  text-align: center;  
-  margin: 20px auto;  
-  padding: 10px;  
-  border-radius: 10px;  
-  border: 1px solid transparent;  
-  text-align: center;  
-  font-size: 1.5em;  
-  color: #fff;  
-  font-weight: 700;  
-  text-transform: uppercase;  
-  background-color: #000;*/
-   
     margin: 50px auto 0px;
     display: table;
     border: none;
@@ -22,14 +7,9 @@
     cursor: pointer;
     color: #fff;
     border-radius: 4px;
-    background-color: #2196f3;
 }
 
-
 #scrollUp {
- /* position: fixed;
-  right: 100px; 
-  text-align: right; */
   bottom: 80px;
   opacity: 0.7;
 }
@@ -41,7 +21,3 @@
   opacity: 0.6;
 }
 
-.title 
-{
-  text-align: center;
-}

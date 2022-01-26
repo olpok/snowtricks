@@ -21,18 +21,7 @@ class VideoController extends AbstractController{
      */
     public function delete(Request $request, Video $video): Response
     {
-        /* après AJAX
-         $data = json_decode($request->getContent(), true);
-
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($image);
-            $entityManager->flush();
-            return new JsonResponse(['success' => 1]);
-        }
         
-        return new JsonResponse(['error' => 'Token invalide', 400]);*/
-
         $trickId = $video->getTrick()->getId();
 
         if ($this->isCsrfTokenValid('delete'.$video->getId(), $request->request->get('_token'))) {
