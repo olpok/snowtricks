@@ -55,9 +55,9 @@ class AppFixtures extends Fixture
         $manager->persist($user);  
 
         $trick1 = new Trick();
-        $trick1  ->setName("front flip")
-                ->setDescription('Rotation verticale avant')
-                ->setCategory($category3) 
+        $trick1  ->setName("ollie")
+                ->setDescription('Charger le tail de votre snoboard afin d\'élancer dans les airs')
+                ->setCategory($category4) 
                 ->setUser($user)
                 ;
                 for ($k=1; $k < mt_rand(4,12); $k++) { 
@@ -69,9 +69,9 @@ class AppFixtures extends Fixture
                         }
 
         $trick2 = new Trick();
-        $trick2  ->setName("back flip")
-                ->setDescription('Rotation verticale arrière')
-                ->setCategory($category3) 
+        $trick2  ->setName("japan")
+                ->setDescription('La main avant attrape le bord des orteils. Les genoux sont fléchis et le nez de la planche est relevé derrière la tête')
+                ->setCategory($category1) 
                 ->setUser($user)
                 ;
 
@@ -87,15 +87,7 @@ class AppFixtures extends Fixture
                         $video->setUrl('https://youtu.be/4M1lRDo_O9I')
                                 ->setTrick($trick3);
                         $manager->persist($video);
-
-                        //entre 2 et 12 comments
-                        for ($k=1; $k < mt_rand(4,12); $k++) { 
-                                $comment = new Comment();
-                                $comment ->setUser($user)
-                                        ->setContent("Comment N° $k")      
-                                        ->setTrick($trick3); 
-                                $manager->persist($comment);
-                        }
+                    
                 }
 
         
@@ -112,13 +104,7 @@ class AppFixtures extends Fixture
                 ->setCategory($category1) 
                 ->setUser($user)
                 ;
-                 for ($j=1; $j <= mt_rand(1,3); $j++) { 
-                        $video = new Video();
-                        $video->setUrl('https://youtu.be/4M1lRDo_O9I')
-                                ->setTrick($trick5);
-                        $manager->persist($video);
-
-                        //entre 2 et 12 comments
+                     //entre 2 et 12 comments
                         for ($k=1; $k < mt_rand(4,12); $k++) { 
                                 $comment = new Comment();
                                 $comment ->setUser($user)
@@ -126,11 +112,10 @@ class AppFixtures extends Fixture
                                         ->setTrick($trick5); 
                                 $manager->persist($comment);
                         }
-                }
         
         $trick6 = new Trick();
-        $trick6  ->setName('truck driver')
-                ->setDescription('Saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)')
+        $trick6  ->setName('indie')
+                ->setDescription('Saisir de la carre frontside de la planche, entre les deux pieds, avec la main arrière')
                 ->setCategory($category3) 
                 ->setUser($user)
                 ;   
@@ -142,6 +127,14 @@ class AppFixtures extends Fixture
                 ->setCategory($category2) 
                 ->setUser($user)
                 ; 
+                //entre 2 et 12 comments
+                        for ($k=1; $k < mt_rand(4,12); $k++) { 
+                                $comment = new Comment();
+                                $comment ->setUser($user)
+                                        ->setContent("Comment N° $k")      
+                                        ->setTrick($trick7); 
+                                $manager->persist($comment);
+                        }
                 
 
         $trick8 = new Trick();
@@ -152,17 +145,17 @@ class AppFixtures extends Fixture
                 ;
 
         $trick9 = new Trick();
-        $trick9  ->setName('tail slide')
-                ->setDescription('Glisser sur une barre de slide avec l\'arrière de la planche')
+        $trick9  ->setName('air')
+                ->setDescription('Un saut avant, une des bases')
                 ->setCategory($category4) 
                 ->setUser($user)
                 ;
 
         
         $trick10 = new Trick();
-        $trick10  ->setName('nose slide')
-                ->setDescription('Glisser sur une barre de slide avec l\'avant de la planche')
-                ->setCategory($category4) 
+        $trick10  ->setName('nose')
+                ->setDescription('La main avant attrape le bout de la planche')
+                ->setCategory($category1) 
                 ->setUser($user)
                 ;
 
@@ -171,16 +164,9 @@ class AppFixtures extends Fixture
                         $video->setUrl('https://youtu.be/4M1lRDo_O9I')
                                 ->setTrick($trick10);
                         $manager->persist($video);
-
-                        //entre 2 et 12 comments
-                        for ($k=1; $k < mt_rand(4,12); $k++) { 
-                                $comment = new Comment();
-                                $comment ->setUser($user)
-                                        ->setContent("Comment N° $k")      
-                                        ->setTrick($trick10); 
-                                $manager->persist($comment);
-                        }
                 }
+
+                
 
         $manager->persist($trick1);
         $manager->persist($trick2);
@@ -198,7 +184,7 @@ class AppFixtures extends Fixture
     //  6 faux tricks 
         for ($i=1; $i <=5; $i++) { 
             $trick = new Trick();
-            $trick->setName("nom-$i")
+            $trick->setName("nom$i")
                 ->setDescription("Description de trick $i")
                 ->setCategory($category2) 
                 ->setUser($user)
@@ -211,16 +197,7 @@ class AppFixtures extends Fixture
                         $video = new Video();
                         $video->setUrl('https://youtu.be/4M1lRDo_O9I');
                         $manager->persist($video);
-
-                        //entre 2 et 12 comments
-                        for ($k=1; $k < mt_rand(4,12); $k++) { 
-                                $comment = new Comment();
-                                $comment ->setUser($user)
-                                        ->setContent("Comment N° $k")      
-                                        ->setTrick($trick); 
-                                $manager->persist($comment);
-                        }
-                }
+                }             
         }
 
         $manager->flush();
