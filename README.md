@@ -1,4 +1,7 @@
 ﻿# snowtricks
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/65c4443464ab42df803e85faa9c864d7)](https://app.codacy.com/gh/olpok/snowtricks?utm_source=github.com&utm_medium=referral&utm_content=olpok/snowtricks&utm_campaign=Badge_Grade_Settings)
+
 About the project
 
 Development of a snowboard community site
