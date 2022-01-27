@@ -20,3 +20,5 @@ Composer 2.1
 9. Start the internal server:  php bin / console server: start
 
 Enjoy!
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/dbf7885b159b47b3ab2977a3d7b55ce3)](https://www.codacy.com/gh/olpok/snowtricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=olpok/snowtricks&amp;utm_campaign=Badge_Grade)
