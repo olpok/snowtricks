@@ -5,12 +5,12 @@
 {% block stylesheets %}
 <style>
     @media only screen and (max-width: 480px) {
-     .med {     
+     .normal {     
        display: none;
      }
     }
     @media only screen and (min-width: 480px) {
-     .mob {     
+     .mobile {     
        display: none;
      }
     }
@@ -67,12 +67,16 @@
 
         </div>
 
-        <div class="med">     
+        <div class="normal">     
         {% include "trick/_media.html.twig" %}
         </div>
 
-        <div class="mob">          
-            <button id="" class="btn btn-outline-primary btn-sm">Show media</button> 
+        <div class="mobile">  
+            <br>        
+            <button id="show" class="btn btn-outline-primary btn-sm">Show media</button> 
+            <div id="test" style="display: none;">
+                {% include "trick/_media.html.twig" %}
+            </div>
         </div>
 
         <section id="step">
@@ -158,9 +162,17 @@
 
     </div>
 </div>
+
+<script>
+$( "#show" ).click(function() {
+  $( "#test" ).show( "slow" );
+});
+</script>
 {% endblock %}
 
 {% block javascripts %}
+
+
 
         <script src= {{asset('js/display_media_mobile.js') }}></script>     
         <script src= {{asset('js/comments_load_more.js') }}></script>
