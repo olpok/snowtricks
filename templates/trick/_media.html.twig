@@ -1,37 +1,30 @@
-<div id="mob-display">
-           
-            <div id="images" class="trick-images py-3">
-                {% for image in trick.images %}
-                <br>
-                    <div id="carousel-image" class="carousel slide" data-interval="false">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="img d-block" src="{{vich_uploader_asset(image,'imageFile') }} " alt="card-img-top" 
-                                    style="object-fit:cover;max-width:80; height:200px;"  >
-                                </div>
-                            </div>
+<div id="images" class="trick-images py-3">
+    {% for image in trick.images %}
+        <br>
+        <div id="carousel-image" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="img d-block" src="{{vich_uploader_asset(image,'imageFile') }} " alt="card-img-top" 
+                        style="object-fit:cover;max-width:80; height:200px;"  >
                     </div>
-                {% endfor %}
-                    
-            </div>
+                </div>
+        </div>
+    {% endfor %}                   
+</div>
 
-            <div id="videos" class="trick-videos py-3">
-                    <h4>Regarder</h4>
-                    {% for video in embedUrl %}
+<div id="videos" class="trick-videos py-3">
+    <h4>Regarder</h4>
+        {% for video in embedUrl %}
                         
-                        <div id="carousel-video" class="carousel slide" data-interval="false">
-                            <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" src="{{ video }}" allowfullscreen=""></iframe>
-                                        </div>
-                                    </div>
+            <div id="carousel-video" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="{{ video }}" allowfullscreen=""></iframe>
                             </div>
                         </div>
-
-                    {% endfor %}
-                    
-
+                </div>
             </div>
 
+        {% endfor %}
 </div>
