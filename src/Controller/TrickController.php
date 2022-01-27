@@ -48,7 +48,7 @@ class TrickController extends AbstractController
     public function list(Request $request): Response
     {
         // On définit le nombre d'éléments par page
-        $limit = 5;
+        $limit = 6;
 
         // On récupère le numéro de page
         $page = (int)$request->query->get("page", 1);
@@ -116,7 +116,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("trick/{slug}-{id}", name="trick_show", methods={"GET", "POST"}, requirements = {"slug": "[a-z0-9\-]*"})
+     * @Route("trick/{slug}-{id}", name="trick_show", methods={"GET", "POST"})
      */
     public function show(Trick $trick, CommentRepository $commentrepo, string $slug, Request $request, EntityManagerInterface $entityManager): Response
     {
