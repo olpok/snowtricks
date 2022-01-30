@@ -118,7 +118,7 @@ class TrickController extends AbstractController
     /**
      * @Route("trick/{slug}-{id}", name="trick_show", methods={"GET", "POST"})
      */
-    public function show(Trick $trick, CommentRepository $commentrepo, string $slug, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Trick $trick, string $slug, CommentRepository $commentrepo, Request $request, EntityManagerInterface $entityManager): Response
     {
         if($trick->getSlug() !== $slug){
             return $this->redirectToRoute('trick_show', [

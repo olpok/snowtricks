@@ -110,7 +110,8 @@ class Trick
     public function getSlug(): string
     {
         $slugger = new AsciiSlugger();
-        return $slugger->slug($this->name);
+      //return $slugger->slug($this->name); //default value with '-' separator
+        return $slugger->slug($this->name, '_'); // separator change allows Slug to match the Sf regex
     }
 
     public function getDescription(): ?string
