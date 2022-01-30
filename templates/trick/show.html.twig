@@ -5,16 +5,17 @@
 {% block stylesheets %}
 <style>
     @media only screen and (max-width: 480px) {
-     .normal {     
-       display: none;
-     }
+        .normal {
+            display: none;
+        }
     }
+
     @media only screen and (min-width: 480px) {
-     .mobile {     
-       display: none;
-     }
+        .mobile {
+            display: none;
+        }
     }
-  </style>
+</style>
 {% endblock %}
 
 
@@ -24,158 +25,162 @@
 <div class="container">
 
     <div class="row">
-   
+
         <div class="row justify-content-center">
 
             {% if trick.image %}
 
-                <div class="image" style="width: 100%;  display: inline-block;">
-                        <div class="col" style="background: url('/media/tricks/images/{{trick.image.name}}' ) no-repeat center center; 
+            <div class="image" style="width: 100%;  display: inline-block;">
+                <div class="col" style="background: url('/media/tricks/images/{{trick.image.name}}' ) no-repeat center center; 
                         width: 100%;
                         height: 540px;
                         background-size: cover;">
-                            <div class="mx-auto text-center">
-                            <h1 class="text-uppercase mx-auto my-0"  style="color:aliceblue">{{trick.name}}</h1>
-                            </div>
-                </div>
-                            
-                {% else %}
-                 <div class="col" style="background: url('/media/tricks/images/default_new.jpg' ) no-repeat center center; 
-                        width: 100%;
-                        height: 540px;
-                        background-size: contain;">  
-                        <div class="mx-auto text-center">
-                            <h1 class="text-uppercase mx-auto my-0"  style="color:rgb(38, 113, 179)">{{trick.name}}</h1>
-                        </div>         
-                </div>
-            
-            {% endif %}
-
-        </div>
-
-        <div class="description">
-             <br> 
-
-            <p class="text-muted">
-                <span><i class="fa fa-user pr-2" aria-hidden="true"></i>Catégorie: {{ trick.category }}</span>
-                <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Créé le {{ trick.createdAt | date ('d/m/Y à H:i') }}</span>
-                <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Mise à jour le {{ trick.updatedAt | date ('d/m/Y à H:i') }}</span>
-            </p>
-            
-            <h3>Description</h3>
-            {{ trick.description }}
-
-        </div>
-
-        <div class="normal">     
-        {% include "trick/_media.html.twig" %}
-        </div>
-
-        <div class="mobile">  
-            <br>        
-            <button id="show" class="btn btn-outline-primary btn-sm">Show media</button> 
-            <div id="test" style="display: none;">
-                {% include "trick/_media.html.twig" %}
-            </div>
-        </div>
-
-        <section id="step">
-
-            <div id="comments">
-            
-                <h3>{{trick.comments | length }} commentaires:</h3>
-
-                {% for comment in  showedComments %}
-
-                 {#% for comment in  comments %#}
-
-                    
-                <div class="comment">
-                    <div class="row">
-                        <div class="col-3">
-                            {{comment.user.firstname}} {{comment.user.lastname}} le
-                            <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
-                        </div>
-                        <div class="col">
-                            {{comment.content |raw}}
-                        </div>
+                    <div class="mx-auto text-center">
+                        <h1 class="text-uppercase mx-auto my-0" style="color:aliceblue">{{trick.name}}</h1>
                     </div>
                 </div>
-                {% endfor %}
-                
+
+                {% else %}
+                <div class="col" style="background: url('/media/tricks/images/default_new.jpg' ) no-repeat center center; 
+                        width: 100%;
+                        height: 540px;
+                        background-size: contain;">
+                    <div class="mx-auto text-center">
+                        <h1 class="text-uppercase mx-auto my-0" style="color:rgb(38, 113, 179)">{{trick.name}}</h1>
+                    </div>
+                </div>
+
+                {% endif %}
+
             </div>
 
-            <br>
+            <div class="description">
+                <br>
 
-            <div class="col text-center">
-                <button id="comments-load-more" class="btn btn-primary">Load more</button>
-            </div> 
-            
-            <br>
+                <p class="text-muted">
+                    <span><i class="fa fa-user pr-2" aria-hidden="true"></i>Catégorie: {{ trick.category }}</span>
+                    <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Créé le {{ trick.createdAt | date
+                        ('d/m/Y à H:i') }}</span>
+                    <span><i class="fa fa-calendar-o px-2" aria-hidden="true"></i>Mise à jour le {{ trick.updatedAt |
+                        date ('d/m/Y à H:i') }}</span>
+                </p>
 
-            <ul class="pagination">
-                <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
-                    <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}" tabindex="-1">Précédent</a>
-                </li>               
-                {% set pages = (total/limitShowed)|round(0, 'ceil') %}
-                {% for item in 1..(pages) %}                   
-                    {% if total !=0  %}
-                        <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link" href="?page={{item}}">{{item}} </a></li> 
+                <h3>Description</h3>
+                {{ trick.description }}
+
+            </div>
+
+            <div class="normal">
+                {% include "trick/_media.html.twig" %}
+            </div>
+
+            <div class="mobile">
+                <br>
+                <button id="show" class="btn btn-outline-primary btn-sm">Show media</button>
+                <div id="test" style="display: none;">
+                    {% include "trick/_media.html.twig" %}
+                </div>
+            </div>
+
+            <section id="step">
+
+                <div id="comments">
+
+                    <h3>{{trick.comments | length }} commentaires:</h3>
+
+                    {% for comment in showedComments %}
+
+                    {#% for comment in comments %#}
+
+
+                    <div class="comment">
+                        <div class="row">
+                            <div class="col-3">
+                                {{comment.user.firstname}} {{comment.user.lastname}} le
+                                <small>{{comment.createdAt | date ('d/m/Y à H:i') }}</small>
+                            </div>
+                            <div class="col">
+                                {{comment.content |raw}}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <br>
+
+                <div class="col text-center">
+                    <button id="comments-load-more" class="btn btn-primary">Load more</button>
+                </div>
+
+                <br>
+
+                <ul class="pagination">
+                    <li class="page-item  {{ (page==1) ? 'disabled' : ''}}">
+                        <a class="page-link" href="{{ (page > 1)? '?page=' ~ (page - 1) : '' }}"
+                            tabindex="-1">Précédent</a>
+                    </li>
+                    {% set pages = (total/limitShowed)|round(0, 'ceil') %}
+                    {% for item in 1..(pages) %}
+                    {% if total !=0 %}
+                    <li class="page-item {{ (page==item) ? 'active' : ''}}"><a class="page-link"
+                            href="?page={{item}}">{{item}} </a></li>
                     {% endif %}
-                {% endfor %}
-                <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
-                    <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} " 
-                        tabindex="-1">Suivant</a>
-                </li>
-            </ul>
+                    {% endfor %}
+                    <li class="page-item {{ (page==pages) ? 'disabled' : ''}}">
+                        <a class="page-link" href="{{ (page < pages)? '?page=' ~ (page + 1) : '' }} "
+                            tabindex="-1">Suivant</a>
+                    </li>
+                </ul>
 
-            <small> Pour pouvoir ajouter un commentaire, vous devez vous 
-                <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
-            </small>
-            
-            <br> <br>
+                <small> Pour pouvoir ajouter un commentaire, vous devez vous
+                    <a class="text-black-50" href="{{ path('app_login') }}">connecter</a>
+                </small>
+
+                <br> <br>
+
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
+
+                {{form_start(commentForm)}}
+                {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
+                <button type="submit" class="btn btn-dark">Commenter !</button>
+                {{form_end(commentForm)}}
+                {{form_end(commentForm)}}
+                {% else %}
+
+                {% endif %}
+
+            </section>
+
+            <br>
+
+            <a href="{{ path('list') }}">retour à la liste</a>
 
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-
-            {{form_start(commentForm)}}
-            {{form_row(commentForm.content, {'attr':{'placeholder':'Votre commentaire'}})}}
-            <button type="submit" class="btn btn-dark">Commenter !</button>
-            {{form_end(commentForm)}}
-            {{form_end(commentForm)}}
+            <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
+            {{ include('trick/_delete_form.html.twig') }} </h5>
             {% else %}
-
             {% endif %}
 
-        </section>
-
-        <br>
-
-        <a href="{{ path('list') }}">retour à la liste</a>
-
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user.isVerified == true %}
-        <a href="{{ path('trick_edit', {'id': trick.id}) }}"> edit</a>
-        {{ include('trick/_delete_form.html.twig') }} </h5>
-        {% else %}
-        {% endif %}
 
 
-
+        </div>
     </div>
-</div>
 
-<script>
-$( "#show" ).click(function() {
-  $( "#test" ).show( "slow" );
-});
-</script>
-{% endblock %}
+    <script>
+        $("#show").click(function () {
+            $("#test").show("slow");
+        });
+    </script>
+    {% endblock %}
 
-{% block javascripts %}
-
+    {% block javascripts %}
 
 
-        <script src= {{asset('js/display_media_mobile.js') }}></script>     
-        <script src= {{asset('js/comments_load_more.js') }}></script>
 
-        
-{% endblock %}
+    <script src={{asset('js/display_media_mobile.js') }}></script>
+    <script src={{asset('js/comments_load_more.js') }}></script>
+
+
+    {% endblock %}
